@@ -165,7 +165,7 @@
   <body>
     <div class="container1">
       <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'show_list')"> Show Sessions </button>
+        <button id ="showListButton" class="tablinks" onclick="openTab(event, 'show_list')"> Show Sessions </button>
         <h2 style="display: inline; color: gray">|</h2>
         <button class="tablinks" onclick="openTab(event, 'lets_jio')"> Let's Jio </button>
       </div>
@@ -413,6 +413,13 @@
       }
     </script>
     <script>
+      $(window).on('load',function() {
+        clearSessions()
+        fetchSessions()
+        document.getElementById("show_list").style.display = "block";
+        var btn = document.getElementById("showListButton");
+        showListButton.className += " active";
+      });
       $(document).ready(function() {
         $("#sessionSubmitButton").click(function() {
           var formData = $("#sessionForm").serializeArray()
