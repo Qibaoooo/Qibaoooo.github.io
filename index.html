@@ -390,6 +390,27 @@
         }, 1000);
 
       }
+
+      function getWeekDayFromDate(datestr) {
+        const d = new Date(datestr);
+        let day = d.getDay()
+        switch (day) {
+          case 0:
+            return 'SUN'
+          case 1:
+            return 'MON'
+          case 2:
+            return 'TUE'
+          case 3:
+            return 'WED'
+          case 4:
+            return 'THU'
+          case 5:
+            return 'FRI'
+          case 6:
+            return 'SAT'
+        }
+      }
     </script>
     <script>
       $(document).ready(function() {
@@ -398,6 +419,10 @@
           var postData = {};
           for (let i in formData) {
             data = formData[i]
+            if (data['name']==='date') {
+              weekDay = getWeekDayFromDate(data['value'])
+              data['value']=data['value']+" "+weekDay
+            }
             postData[data['name']] = data['value']
             if (!data['value']) {
               alert('Please fill in all fields.')
