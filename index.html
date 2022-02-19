@@ -1,320 +1,310 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <style>
-         /* palette: FFFFFF E0ECDE CDE0C9 68B2A0 2C6975 */
-         body {
-         font-family: monospace;
-         text-align: center;
-         background-color: #e0ecde;
-         }
-         /* Style the tab */
-         .tab {
-         overflow: visible;
-         background-color: #e0ecde;
-         width: 350;
-         height: 48px;
-         text-align: center;
-         }
-         /* Style the buttons inside the tab */
-         .tab button {
-         background-color: inherit;
-         border: 1px solid transparent;
-         border-radius: 3em;
-         outline: none;
-         cursor: pointer;
-         margin: 2.5% 5%;
-         padding: 5px 5px;
-         transition: 0.3s;
-         font-size: 16px;
-         color: gray;
-         font-family: monospace;
-         }
-         /* Change background color of buttons on hover */
-         .tab button:hover {
-         background-color: #cde0c9;
-         padding: 5px 5px;
-         color: rgb(56, 55, 55);
-         }
-         /* Create an active/current tablink class */
-         .tab button.active {
-         background-color: #cde0c9;
-         padding: 5px 5px;
-         color: rgb(56, 55, 55);
-         font-size: 17px;
-         }
-         /* Style the tab content */
-         .tabcontent {
-         display: none;
-         padding: 6px 12px;
-         width: 350;
-         margin: auto;
-         }
-         /* Style table */
-         table {
-         border: 1px solid;
-         width: 330px;
-         }
-         th {
-         border: 1px solid;
-         }
-         td {
-         border: 1px solid;
-         }
-         thead tr th:first-child,
-         tbody tr td:first-child,
-         thead tr th:last-child,
-         tbody tr td:last-child {
-         width: 7em;
-         min-width: 7em;
-         max-width: 7em;
-         word-break: break-all;
-         }
-         #formTable td,
-         #formTable tr {
-         border: none;
-         }
-         .container1 {
-         width: 350px;
-         text-align: center;
-         margin: auto;
-         }
-         /* Toast */
-         .toast {
-         visibility: hidden;
-         background-color: transparent;
-         color: gray;
-         padding: 16px;
-         z-index: 10;
-         font-size: 10px;
-         }
-         .toast.show {
-          visibility: visible;
-          animation: fadein 0.5s, fadeout 0.5s 2.5s;
-         }
-      </style>
-   </head>
-   <body>
-      <div class="container1">
-         <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'show_list')">
-            Show List
-            </button>
-            <h2 style="display: inline; color: gray">|</h2>
-            <button class="tablinks" onclick="openTab(event, 'lets_jio')">
-            Let's Jio
-            </button>
-         </div>
-         <hr>
-         </hr>
-         <div id="show_list" class="tabcontent">
-            <table id="sessionTable">
-               <thead>
-                  <tr>
-                     <th>
-                        Date
-                     </th>
-                    <th>Slot</th>
-                     <th>
-                        <button onclick="showCopiedToast()" style="border: none; background-color: transparent;">
-                          Jio
-                        </button>
-                      </th>
-                  </tr>
-               </thead>
-               <tbody>
-               </tbody>
-            </table>
-         </div>
-         <div id="lets_jio" class="tabcontent">
-            <form id="sessionForm" action="#">
-               <fieldset style="padding: 20px;">
-                  <legend>Lets have a fun session</legend>
-                  <input type="date" name="date" required>
-                  <hr>
-                  <select name="time_1" required style="font-family: 'Courier New', Courier, monospace;">
-                     <option>1</option>
-                     <option>2</option>
-                     <option>3</option>
-                     <option>4</option>
-                     <option>5</option>
-                     <option>6</option>
-                     <option>7</option>
-                     <option>8</option>
-                     <option>9</option>
-                     <option>10</option>
-                     <option>11</option>
-                     <option>12</option>
-                  </select>
-                  <p style="display: inline;">:</p>
-                  <select name="time_2" required style="font-family: 'Courier New', Courier, monospace;">
-                     <option>00</option>
-                     <option>30</option>
-                  </select>
-                  <p style="display: inline;">-</p>
-                  <select name="time_3" required style="font-family: 'Courier New', Courier, monospace;">
-                     <option>AM</option>
-                     <option>PM</option>
-                  </select>
-                  <hr>
-                  <select name="gym" required style="font-family: 'Courier New', Courier, monospace;">
-                     <option>B+_JE</option>
-                     <option>B+_Kallang</option>
-                     <option>B8a</option>
-                     <option>BM_DownTown</option>
-                     <option>BM_Rocher</option>
-                     <option>BM_TaiSeng</option>
-                     <option>CC_Funan</option>
-                     <option>CC_Novena</option>
-                     <option>CC_SportsHub</option>
-                     <option>THall</option>
-                  </select>
-                  <hr>
-                  <input type="text" name="name" placeholder="who ah?" style="font-family: 'Courier New', Courier, monospace;">
-                  <hr>
-                  <button type="button" id="sessionSubmitButton" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">
-                  Jio
-                  </button>
-               </fieldset>
-            </form>
-         </div>
-         <div id="copiedToast" class="toast"><p>Copied</p></div>
-      </div>
-      
-      
-      
-      <script>
-         function openTab(evt, tabName) {
-           // const
-           const SHOW_LIST="show_list"
-           const LETS_JIO="lets_jio"
-         
-           // reset start
-           var i, tabcontent, tablinks;
-           document.getElementById(SHOW_LIST).style.display = "none";
-           document.getElementById(LETS_JIO).style.display = "none";
-         
-           tablinks = document.getElementsByClassName("tablinks");
-           for (i = 0; i < tablinks.length; i++) {
-             tablinks[i].className = tablinks[i].className.replace(" active", "");
-           }
-           clearSessions()
-           // reset end
-         
-           to_act = ""
-           to_hide = ""
-           if (tabName===SHOW_LIST) {
-             fetchSessions(tabName);
-             to_act = SHOW_LIST
-             to_hide = LETS_JIO
-           } else {
-             to_act = LETS_JIO
-             to_hide = SHOW_LIST
-           }
-           
-           document.getElementById(to_act).style.display = "block";
-           evt.currentTarget.className += " active";
-         }
-         
-         function clearSessions() {
-           var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
-           var rows = body.getElementsByTagName("tr")
-           for (let r of rows) {
-             r.remove()
-           }
-         }
-         
-         async function fetchSessions(tabName) {
-           // alert('test')
-           let url =
-             "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions.json";
-           const response = await fetch(url);
-           const data = await response.text();
-           console.log(data);
-           const seshs = JSON.parse(data)
-           clearSessions()
-           for (let ts in seshs) {
-             console.log(seshs[ts])
-             s = seshs[ts]
-             var s_date = s.date
-             var s_time = s.time_1+':'+s.time_2+' '+s.time_3
-             var s_gym = s.gym
-             var s_name = s.name
-             var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
-             var row = body.insertRow(-1);
-             
-             var cell1 = row.insertCell(0);
-             cell1.textContent=s_date
-         
-             var cell2 = row.insertCell(1);
-             var p_s_time=document.createElement("p")
-             p_s_time.textContent="@ "+s_time
-             var p_s_gym=document.createElement("p")
-             p_s_gym.textContent=s_gym
-             cell2.appendChild(p_s_gym)
-             cell2.appendChild(p_s_time)
-         
-             var cell3 = row.insertCell(2);
-             cell3.textContent=s_name
-         
-           }        
-         }
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      /* palette: FFFFFF E0ECDE CDE0C9 68B2A0 2C6975 */
+      body {
+        font-family: monospace;
+        text-align: center;
+        background-color: #e0ecde;
+      }
 
-         function showCopiedToast() {
-           var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
-           var rows = body.getElementsByTagName("tr")
-           var clipstr = ""
-           var newline = true
-           for (let r of rows) {
-                var cells = r.getElementsByTagName("td")
-                for (let c of cells) {
-                  if (newline) {
-                    clipstr = clipstr + " • " +  c.textContent
-                    newline = false
-                  } else {
-                    clipstr = clipstr + " / " + c.textContent
-                  }
-                }
-                clipstr = clipstr + "\n"
-                newline = true
+      /* Style the tab */
+      .tab {
+        overflow: visible;
+        background-color: #e0ecde;
+        width: 350;
+        height: 48px;
+        text-align: center;
+      }
+
+      /* Style the buttons inside the tab */
+      .tab button {
+        background-color: inherit;
+        border: 1px solid transparent;
+        border-radius: 3em;
+        outline: none;
+        cursor: pointer;
+        margin: 2.5% 5%;
+        padding: 5px 5px;
+        transition: 0.3s;
+        font-size: 16px;
+        color: gray;
+        font-family: monospace;
+      }
+
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #cde0c9;
+        padding: 5px 5px;
+        color: rgb(56, 55, 55);
+      }
+
+      /* Create an active/current tablink class */
+      .tab button.active {
+        background-color: #cde0c9;
+        padding: 5px 5px;
+        color: rgb(56, 55, 55);
+        font-size: 17px;
+      }
+
+      /* Style the tab content */
+      .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        width: 350;
+        margin: auto;
+      }
+
+      /* Style table */
+      table {
+        border: 1px solid;
+        width: 330px;
+      }
+
+      th {
+        border: 1px solid;
+      }
+
+      td {
+        border: 1px solid;
+      }
+
+      thead tr th:first-child,
+      tbody tr td:first-child,
+      thead tr th:last-child,
+      tbody tr td:last-child {
+        width: 7em;
+        min-width: 7em;
+        max-width: 7em;
+        word-break: break-all;
+      }
+
+      #formTable td,
+      #formTable tr {
+        border: none;
+      }
+
+      .container1 {
+        width: 350px;
+        text-align: center;
+        margin: auto;
+      }
+
+      /* Toast */
+      .toast {
+        visibility: hidden;
+        background-color: transparent;
+        color: gray;
+        padding: 16px;
+        z-index: 10;
+        font-size: 10px;
+      }
+
+      .toast.show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container1">
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'show_list')"> Show List </button>
+        <h2 style="display: inline; color: gray">|</h2>
+        <button class="tablinks" onclick="openTab(event, 'lets_jio')"> Let's Jio </button>
+      </div>
+      <hr>
+      </hr>
+      <div id="show_list" class="tabcontent">
+        <table id="sessionTable">
+          <thead>
+            <tr>
+              <th> Date </th>
+              <th>Slot</th>
+              <th>
+                <button onclick="showCopiedToast()" style="border: none; background-color: transparent;"> Jio </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="lets_jio" class="tabcontent">
+        <form id="sessionForm" action="#">
+          <fieldset style="padding: 20px;">
+            <legend>Lets have a fun session</legend>
+            <input type="date" name="date" required>
+            <hr>
+            <select name="time_1" required style="font-family: 'Courier New', Courier, monospace;">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </select>
+            <p style="display: inline;">:</p>
+            <select name="time_2" required style="font-family: 'Courier New', Courier, monospace;">
+              <option>00</option>
+              <option>30</option>
+            </select>
+            <p style="display: inline;">-</p>
+            <select name="time_3" required style="font-family: 'Courier New', Courier, monospace;">
+              <option>AM</option>
+              <option>PM</option>
+            </select>
+            <hr>
+            <select name="gym" required style="font-family: 'Courier New', Courier, monospace;">
+              <option>B+_JE</option>
+              <option>B+_Kallang</option>
+              <option>B8a</option>
+              <option>BM_DownTown</option>
+              <option>BM_Rocher</option>
+              <option>BM_TaiSeng</option>
+              <option>CC_Funan</option>
+              <option>CC_Novena</option>
+              <option>CC_SportsHub</option>
+              <option>THall</option>
+            </select>
+            <hr>
+            <input type="text" name="name" placeholder="who ah?" style="font-family: 'Courier New', Courier, monospace;">
+            <hr>
+            <button type="button" id="sessionSubmitButton" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;"> Jio </button>
+          </fieldset>
+        </form>
+      </div>
+      <div id="copiedToast" class="toast">
+        <p>Copied</p>
+      </div>
+    </div>
+    <script>
+      function openTab(evt, tabName) {
+        // const
+        const SHOW_LIST = "show_list"
+        const LETS_JIO = "lets_jio"
+        // reset start
+        var i, tabcontent, tablinks;
+        document.getElementById(SHOW_LIST).style.display = "none";
+        document.getElementById(LETS_JIO).style.display = "none";
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        clearSessions()
+        // reset end
+        to_act = ""
+        to_hide = ""
+        if (tabName === SHOW_LIST) {
+          fetchSessions(tabName);
+          to_act = SHOW_LIST
+          to_hide = LETS_JIO
+        } else {
+          to_act = LETS_JIO
+          to_hide = SHOW_LIST
+        }
+        document.getElementById(to_act).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+
+      function clearSessions() {
+        var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
+        var rows = body.getElementsByTagName("tr")
+        for (let r of rows) {
+          r.remove()
+        }
+      }
+      async function fetchSessions(tabName) {
+        // alert('test')
+        let url = "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions.json";
+        const response = await fetch(url);
+        const data = await response.text();
+        console.log(data);
+        const seshs = JSON.parse(data)
+        clearSessions()
+        for (let ts in seshs) {
+          console.log(seshs[ts])
+          s = seshs[ts]
+          var s_date = s.date
+          var s_time = s.time_1 + ':' + s.time_2 + ' ' + s.time_3
+          var s_gym = s.gym
+          var s_name = s.name
+          var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
+          var row = body.insertRow(-1);
+          var cell1 = row.insertCell(0);
+          cell1.textContent = s_date
+          var cell2 = row.insertCell(1);
+          var p_s_time = document.createElement("p")
+          p_s_time.textContent = "@ " + s_time
+          var p_s_gym = document.createElement("p")
+          p_s_gym.textContent = s_gym
+          cell2.appendChild(p_s_gym)
+          cell2.appendChild(p_s_time)
+          var cell3 = row.insertCell(2);
+          cell3.textContent = s_name
+        }
+      }
+
+      function showCopiedToast() {
+        var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
+        var rows = body.getElementsByTagName("tr")
+        var clipstr = ""
+        var newline = true
+        for (let r of rows) {
+          var cells = r.getElementsByTagName("td")
+          for (let c of cells) {
+            if (newline) {
+              clipstr = clipstr + " • " + c.textContent
+              newline = false
+            } else {
+              clipstr = clipstr + " / " + c.textContent
+            }
           }
-           navigator.clipboard.writeText(clipstr)
-           var t = document.getElementById("copiedToast")
-           t.className = t.className+" show"
-           setTimeout(function(){ t.className = t.className.replace("show", ""); }, 1000);
-         }
-      </script>
-      <script>
-         $(document).ready(function(){
-           $("#sessionSubmitButton").click(function(){
-             var formData = $("#sessionForm").serializeArray()
-             var postData = {};
-             for (let i in formData) {
-               data = formData[i]
-               postData[data['name']]=data['value']
-               if (!data['value']) {
-                 alert('Please fill in all fields.')
-                 return
-               }
-             }
-             postData = JSON.stringify(postData)
-             let url =
-                   "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions.json";
-             $.ajax(url,{
-               data: postData,
-               type : 'POST',
-               success: function(resp) {
-                 console.log(resp)
-                 location.reload()
-                 alert('Success!')
-               }
-             })
-             
-           });
-         });
-             
-      </script>
-   </body>
+          clipstr = clipstr + "\n"
+          newline = true
+        }
+        navigator.clipboard.writeText(clipstr)
+        var t = document.getElementById("copiedToast")
+        t.className = t.className + " show"
+        setTimeout(function() {
+          t.className = t.className.replace("show", "");
+        }, 1000);
+      }
+    </script>
+    <script>
+      $(document).ready(function() {
+        $("#sessionSubmitButton").click(function() {
+          var formData = $("#sessionForm").serializeArray()
+          var postData = {};
+          for (let i in formData) {
+            data = formData[i]
+            postData[data['name']] = data['value']
+            if (!data['value']) {
+              alert('Please fill in all fields.')
+              return
+            }
+          }
+          postData = JSON.stringify(postData)
+          let url = "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions.json";
+          $.ajax(url, {
+            data: postData,
+            type: 'POST',
+            success: function(resp) {
+              console.log(resp)
+              location.reload()
+              alert('Success!')
+            }
+          })
+        });
+      });
+    </script>
+  </body>
 </html>
