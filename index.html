@@ -50,8 +50,9 @@
         font-size: 17px;
       }
 
-      /* Cancel button */
-      tbody tr td:last-child {
+      /* Names button */
+      tbody tr td:last-child,
+      tbody tr td:first-child {
         position: relative;
       }
 
@@ -67,6 +68,15 @@
         text-align: left;
         overflow-wrap: break-word;
         overflow: scroll;
+      }
+      .cancelButton {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        text-align: left;
       }
 
       #copyButton {
@@ -247,7 +257,7 @@
         clearSessions()
         var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
         var rows = body.getElementsByTagName("tr")
-        console.log('rows after: ' + rows.length)
+        // console.log('rows after: ' + rows.length)
         // reset end
         to_act = ""
         to_hide = ""
@@ -275,7 +285,7 @@
         const data = await response.text();
         const seshs = JSON.parse(data)
         for (let ts in seshs) {
-          console.log(seshs[ts])
+          // console.log(seshs[ts])
           s = seshs[ts]
           var s_date = s.date
           var s_time = s.time_1 + ':' + s.time_2 + ' ' + s.time_3
@@ -284,8 +294,20 @@
           var id = ts
           var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
           var row = body.insertRow(-1);
+
           var cell1 = row.insertCell(0);
+          var cButton = document.createElement("button")
+          cButton.className = "cancelButton"
+          cButton.innerHTML = "&#x2716;"
+          cButton.setAttribute("data-id",ts)
+          cButton.setAttribute("data-name", s_name)
+          cButton.setAttribute("data-time", s_time)
+          cButton.setAttribute("data-gym", s_gym)
+          cButton.setAttribute("data-date", s_date)
+          cButton.onclick = cancelSession
           cell1.textContent = s_date
+          cell1.appendChild(cButton)
+          
           var cell2 = row.insertCell(1);
           var p_s_time = document.createElement("p")
           p_s_time.textContent = " @ " + s_time
@@ -293,6 +315,7 @@
           p_s_gym.textContent = s_gym
           cell2.appendChild(p_s_gym)
           cell2.appendChild(p_s_time)
+
           var cell3 = row.insertCell(2);
           var ebutton = document.createElement("button")
           ebutton.innerHTML = s_name
@@ -303,7 +326,6 @@
           ebutton.setAttribute("data-time", s_time)
           ebutton.setAttribute("data-gym", s_gym)
           ebutton.setAttribute("data-date", s_date)
-          // cell3.textContent = s_name
           cell3.appendChild(ebutton)
         }
       }
@@ -322,7 +344,7 @@
         var postData = new Object()
         postData["name"] = String(new_names)
         postData = JSON.stringify(postData)
-        console.log(postData)
+        // console.log(postData)
         $.ajax(url, {
           data: postData,
           type: 'PATCH',
@@ -332,35 +354,41 @@
           }
         })
       }
-      // function joinSession(event) {
-      //   console.log('er')
-      //   var btn = event.currentTarget
-      //   confirm("join ? "+btn.id)
-      // }
-      function showCopiedToast() {
-        var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
-        var rows = body.getElementsByTagName("tr")
-        var clipstr = ""
-        var newline = true
-        for (let r of rows) {
-          var cells = r.getElementsByTagName("td")
-          for (let c of cells) {
-            if (newline) {
-              clipstr = clipstr + " • " + c.textContent
-              newline = false
-            } else {
-              clipstr = clipstr + " / " + c.textContent
-            }
-          }
-          clipstr = clipstr + "\n"
-          newline = true
+
+      function cancelSession(event) {
+        var b = event.currentTarget
+        info = "• "+b.getAttribute("data-date")+" / "+b.getAttribute("data-time")+" @ "+b.getAttribute("data-gym")+" / "+b.getAttribute("data-name")+"\n"
+        resp = confirm("Cancel: \n"+info+"Confirm?")
+        console.log(resp)
+        if (!resp) {
+          return
         }
+        id = b.getAttribute("data-id")
+        let url = "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions/" + id + ".json";
+        console.log(url)
+        $.ajax(url, {
+          type: 'DELETE',
+          success: function(resp) {
+            location.reload()
+            alert('Success!')
+          }
+        })
+      }
+
+      function showCopiedToast() {
+        var clipstr = ""
+        var name_btns = document.getElementsByClassName("editButton")
+        for (let b of name_btns) {
+          clipstr = clipstr+ "• "+b.getAttribute("data-date")+" / "+b.getAttribute("data-time")+" @ "+b.getAttribute("data-gym")+" / "+b.getAttribute("data-name")+"\n"
+        }
+
         navigator.clipboard.writeText(clipstr)
         var t = document.getElementById("copiedToast")
         t.className = t.className + " show"
         setTimeout(function() {
           t.className = t.className.replace("show", "");
         }, 1000);
+
       }
     </script>
     <script>
