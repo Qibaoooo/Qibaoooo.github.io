@@ -114,23 +114,17 @@
                <thead>
                   <tr>
                      <th>
-                        <button onclick="showCopiedToast()" style="border: none; background-color: transparent;">
                         Date
-                        </button>
                      </th>
-                     <th>Slot</th>
-                     <th>Jio</th>
+                    <th>Slot</th>
+                     <th>
+                        <button onclick="showCopiedToast()" style="border: none; background-color: transparent;">
+                          Jio
+                        </button>
+                      </th>
                   </tr>
                </thead>
                <tbody>
-                  <tr>
-                     <td>20220218</td>
-                     <td>
-                        <p>BM_TS</p>
-                        <p>1600</p>
-                     </td>
-                     <td>Qibao</td>
-                  </tr>
                </tbody>
             </table>
          </div>
@@ -240,6 +234,7 @@
            const data = await response.text();
            console.log(data);
            const seshs = JSON.parse(data)
+           clearSessions()
            for (let ts in seshs) {
              console.log(seshs[ts])
              s = seshs[ts]
@@ -255,7 +250,7 @@
          
              var cell2 = row.insertCell(1);
              var p_s_time=document.createElement("p")
-             p_s_time.textContent=s_time
+             p_s_time.textContent="@ "+s_time
              var p_s_gym=document.createElement("p")
              p_s_gym.textContent=s_gym
              cell2.appendChild(p_s_gym)
@@ -268,7 +263,24 @@
          }
 
          function showCopiedToast() {
-           console.log('gere')
+           var body = document.getElementById("sessionTable").getElementsByTagName("tbody")[0];
+           var rows = body.getElementsByTagName("tr")
+           var clipstr = ""
+           var newline = true
+           for (let r of rows) {
+                var cells = r.getElementsByTagName("td")
+                for (let c of cells) {
+                  if (newline) {
+                    clipstr = clipstr + " • " +  c.textContent
+                    newline = false
+                  } else {
+                    clipstr = clipstr + " / " + c.textContent
+                  }
+                }
+                clipstr = clipstr + "\n"
+                newline = true
+          }
+           navigator.clipboard.writeText(clipstr)
            var t = document.getElementById("copiedToast")
            t.className = t.className+" show"
            setTimeout(function(){ t.className = t.className.replace("show", ""); }, 1000);
