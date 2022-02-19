@@ -87,10 +87,14 @@
         border: none;
       }
 
+      /* Random styles */
       .container1 {
         width: 350px;
         text-align: center;
         margin: auto;
+      }
+      p {
+        white-space: pre-wrap;
       }
 
       /* Toast */
@@ -201,7 +205,7 @@
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
           tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
+        } 
         clearSessions()
         // reset end
         to_act = ""
@@ -246,7 +250,7 @@
           cell1.textContent = s_date
           var cell2 = row.insertCell(1);
           var p_s_time = document.createElement("p")
-          p_s_time.textContent = "@ " + s_time
+          p_s_time.textContent = " @ " + s_time
           var p_s_gym = document.createElement("p")
           p_s_gym.textContent = s_gym
           cell2.appendChild(p_s_gym)
