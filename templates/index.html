@@ -381,6 +381,9 @@
           var s_time = s.time_1 + ":" + s.time_2 + " " + s.time_3;
           var s_gym = s.gym;
           var s_name = s.name;
+          if (!s_name) {
+            s_name = "none"
+          }
           var id = ts;
           var body = document
             .getElementById("sessionTable")
@@ -441,7 +444,7 @@
           info + "\n" + "Add/remove your name(s) here: ",
           user_names
         );
-        if (new_names === null) {
+        if (new_names === null || new_names === "") {
           // new_names=user_names
           return;
         }
