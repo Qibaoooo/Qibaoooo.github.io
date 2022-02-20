@@ -260,8 +260,8 @@
         <div id="copiedToast" class="toast">
           <p>Copied.</p>
           <p>
-            Sometimes Wechat web browser cannot copy.
-            If so can open this page in your phone's browser.
+            Some WeChat browsers do not support copy.
+            If so please open this page in your phone's browser.
           </p>
         </div>
       </div>
@@ -446,7 +446,9 @@
         );
         if (new_names === null || new_names === "") {
           // new_names=user_names
-          alert("Please enter climber names.");
+          if (new_names === "") {
+            alert("Please enter climber names.");
+          }
           return;
         }
         var postData = new Object();
