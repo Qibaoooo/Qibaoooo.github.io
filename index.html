@@ -190,7 +190,7 @@
         text-align: justify;
         margin: 5px;
         font-family: "Fredericka the Great";
-        font-size: 18px;
+        font-size: 14px;
       }
 
       .randomWordsCredit {
@@ -200,6 +200,7 @@
       /* Toast */
       .toast {
         opacity: 0;
+        visibility: collapse;
         background-color: transparent;
         color: gray;
         padding: 0px;
@@ -213,8 +214,9 @@
       }
 
       .toast.show {
+        visibility: visible;
         opacity: 1;
-        animation: fadeinout 10s linear forwards;
+        animation: fadeinout 5s linear forwards;
       }
       @keyframes fadeinout {
         0%,
@@ -526,7 +528,7 @@
         t.className = t.className + " show";
         setTimeout(function () {
           t.className = t.className.replace("show", "");
-        }, 10000);
+        }, 5000);
       }
 
       function getWeekDayFromDate(datestr) {
