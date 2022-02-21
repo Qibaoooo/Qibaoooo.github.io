@@ -525,6 +525,10 @@
       function showCopiedToast() {
         var clipstr = "";
         var name_btns = document.getElementsByClassName("editButton");
+        if (name_btns.length===0) {
+          alert("No upcoming sessions.")
+          return
+        }
         for (let b of name_btns) {
           clipstr =
             clipstr +
