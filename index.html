@@ -385,6 +385,20 @@
         const response = await fetch(url);
         const data = await response.text();
         const seshs = JSON.parse(data);
+        if (seshs===null) {
+          var body = document
+          .getElementById("sessionTable")
+          .getElementsByTagName("tbody")[0];
+          var row = body.insertRow(-1);
+          cell = row.insertCell(0)
+          var p1 = document.createElement("p");
+          var p2 = document.createElement("p");
+          p1.textContent = "No upcoming sessions 😧";
+          p2.textContent = "Create one in the <Let's Jio> tab";
+          cell.setAttribute("colspan",3)
+          cell.appendChild(p1)
+          cell.appendChild(p2)
+        }
         for (let ts in seshs) {
           // console.log(seshs[ts])
           s = seshs[ts];
