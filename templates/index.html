@@ -18,9 +18,9 @@
     />
 
     <!-- START OF CSS  -->
-
+    <!-- palette: FFFFFF E0ECDE CDE0C9 68B2A0 2C6975 -->
+    
     <style>
-      /* palette: FFFFFF E0ECDE CDE0C9 68B2A0 2C6975 */
       body {
         font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
         text-align: center;
@@ -67,26 +67,26 @@
       }
 
       /* Names button */
-      tbody tr td:last-child,
-      tbody tr td:first-child {
-        position: relative;
-      }
-
       .editButton {
-        position: absolute;
+        position: relative;
+        padding: 0px;
         top: 0px;
         left: 0px;
-        size: 30px;
+        /* size: 30px; */
+        width: 7em;
         height: 100%;
         cursor: pointer;
         border: none;
         background-color: transparent;
         text-align: left;
-        overflow-wrap: break-word;
-        overflow: scroll;
         color: #68b2a0;
         font-family: "ZCOOL XiaoWei";
         font-size: 15px;
+      }
+      .editButton p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .cancelButton {
         position: absolute;
@@ -97,7 +97,6 @@
         background-color: transparent;
         text-align: left;
       }
-
       #copyButton {
         margin-top: 10px;
         position: absolute;
@@ -128,28 +127,26 @@
         margin-left: auto;
         margin-right: auto;
       }
-
+      tbody tr td:last-child,
+      tbody tr td:first-child {
+        position: relative;
+      }
       th {
         border: 1px solid;
       }
-
       td {
         border: 1px solid;
       }
-
       thead tr th:first-child,
       tbody tr td:first-child {
-        width: 5em;
-        min-width: 5em;
+        min-width: 4em;
         max-width: 5em;
       }
       thead tr th:last-child,
       tbody tr td:last-child {
-        width: 7em;
-        min-width: 7em;
-        max-width: 7em;
+        min-width: 5em;
+        max-width: 6em;
       }
-
       #formTable td,
       #formTable tr {
         border: none;
@@ -447,7 +444,8 @@
 
           var cell3 = row.insertCell(2);
           var ebutton = document.createElement("button");
-          ebutton.innerHTML = s_name;
+          var p_name = document.createElement("p");
+          p_name.innerHTML = s_name;
           ebutton.className = "editButton";
           ebutton.onclick = editSession;
           ebutton.id = ts;
@@ -455,6 +453,7 @@
           ebutton.setAttribute("data-time", s_time);
           ebutton.setAttribute("data-gym", s_gym);
           ebutton.setAttribute("data-date", s_date);
+          ebutton.appendChild(p_name)
           cell3.appendChild(ebutton);
         }
       }
