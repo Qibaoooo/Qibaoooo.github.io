@@ -222,7 +222,13 @@ h5 {
 .pastSessions {
   text-align: left;
   margin: 0px;
+  height: 300px;
+  overflow: scroll;
 }
 .pastSessions p {
   padding-left: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
