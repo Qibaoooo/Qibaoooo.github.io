@@ -281,6 +281,12 @@
             page in your phone's browser.
           </p>
         </div>
+
+        <h5>Past Sessions</h5>
+
+        <div class="pastSessions">
+          
+        </div>
       </div>
       <div id="lets_jio" class="tabcontent">
         <form id="sessionForm" action="#">
@@ -378,6 +384,22 @@
         evt.currentTarget.className += " active";
       }
 
+      async function fetchPastSessions() {
+        var psDiv = $(".pastSessions")
+        console.log(psDiv)
+        let url =
+          "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/archive.json";
+        const response = await fetch(url);
+        const data = await response.text();
+        const seshs = JSON.parse(data);
+        console.log(seshs)        
+        for (var k in seshs) {
+          var p = document.createElement("p")
+          p.textContent = seshs[k]
+          psDiv.append(p)
+        }
+      }
+
       function clearSessions() {
         var body = document
           .getElementById("sessionTable")
@@ -385,6 +407,7 @@
         var newBody = document.createElement("tbody");
         document.getElementById("sessionTable").replaceChild(newBody, body);
       }
+
       async function fetchSessions(tabName) {
         // alert('test')
         let url =
@@ -417,6 +440,19 @@
             s_name = "none";
           }
           var id = ts;
+
+          // date filter
+          if (dateIsBeforeToday(s_date.split(" ")[0])) {
+            // send BE api to delet this event & then archive it.
+            console.log("deleteing session ",s_date)
+            session_str = getSessionInfo(s_date,s_time,s_gym,s_name)
+            apiArchiveSession(session_str)
+            apiDeleteSession(id)
+            continue
+            // dont show this row
+          }
+          // date filter end
+
           var body = document
             .getElementById("sessionTable")
             .getElementsByTagName("tbody")[0];
@@ -528,19 +564,48 @@
           return;
         }
         id = b.getAttribute("data-id");
+        apiDeleteSession(id,true)
+      }
+
+      function apiDeleteSession(s_id,showAlert = false) {
         let url =
           "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/sessions/" +
-          id +
+          s_id +
           ".json";
         console.log(url);
         $.ajax(url, {
           type: "DELETE",
           success: function (resp) {
-            location.reload();
-            alert("Success!");
+            if (showAlert) {
+              alert("Success!")
+              location.reload()
+          }
           },
         });
       }
+
+      function apiArchiveSession(session_info) {
+        postData = JSON.stringify(session_info);
+          let url =
+            "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/archive.json";
+          $.ajax(url, {
+            data: postData,
+            type: "POST",
+            success: function (resp) {
+              console.log("archived "+postData)
+            },
+          });
+      }
+
+      // async function apiFetchArchive() {
+      //   let url =
+      //     "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/archive.json";
+      //   const response = await fetch(url);
+      //   const data = await response.text();
+      //   const seshs = JSON.parse(data);
+      //   console.log(seshs)
+      //   return seshs
+      // }
 
       function showCopiedToast() {
         var clipstr = "";
@@ -551,16 +616,7 @@
         }
         for (let b of name_btns) {
           clipstr =
-            clipstr +
-            "• " +
-            b.getAttribute("data-date") +
-            " / " +
-            b.getAttribute("data-time") +
-            " @ " +
-            b.getAttribute("data-gym") +
-            " / " +
-            b.getAttribute("data-name") +
-            "\n";
+            clipstr + getSessionInfo(b.getAttribute("data-date"),b.getAttribute("data-time"),b.getAttribute("data-gym"),b.getAttribute("data-name"))
         }
 
         navigator.clipboard.writeText(clipstr);
@@ -569,6 +625,10 @@
         setTimeout(function () {
           t.className = t.className.replace("show", "");
         }, 5000);
+      }
+
+      function getSessionInfo(s_date,s_time,s_gym,s_name = "none") {
+            return "• " + s_date + " / " + s_time + " @ " + s_gym + " / " + s_name + "\n";
       }
 
       function getWeekDayFromDate(datestr) {
@@ -591,9 +651,17 @@
             return "SAT";
         }
       }
+      function dateIsBeforeToday(datestr) {
+        const tod = new Date();
+        const d = new Date(datestr);
+        // console.log(tod)
+        // console.log(d)
+        return (tod>d)
+      }
     </script>
     <script>
       $(window).on("load", function () {
+        fetchPastSessions();
         clearSessions();
         fetchSessions();
         document.getElementById("show_list").style.display = "block";
