@@ -432,6 +432,7 @@
           cButton.setAttribute("data-gym", s_gym);
           cButton.setAttribute("data-date", s_date);
           cButton.onclick = cancelSession;
+          cell1.className = "dateCell"
           cell1.textContent = s_date;
           cell1.appendChild(cButton);
 
@@ -457,6 +458,16 @@
           ebutton.appendChild(p_name)
           cell3.appendChild(ebutton);
         }
+        
+        var rows = $('tbody > tr')
+        rows = rows.sort(function (a, b) {
+          inta = parseInt($('td.dateCell', a).text().split(" ")[0].replaceAll("-",""))
+          intb = parseInt($('td.dateCell', b).text().split(" ")[0].replaceAll("-",""))
+          return inta - intb;
+        })
+        $('tbody').empty()
+        $('tbody').append(rows)        
+
       }
 
       function editSession(event) {
