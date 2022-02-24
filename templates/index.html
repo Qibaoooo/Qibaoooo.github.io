@@ -431,7 +431,7 @@
         const d = new Date(datestr);
         // console.log(tod)
         // console.log(d)
-        return (tod>d)
+        return ((tod.getTime()-d.getTime())>86400000)
       }
     </script>
     <script>
