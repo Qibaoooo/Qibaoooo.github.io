@@ -1,4 +1,4 @@
 ## Qibaoooo.github.io
 > ClimbJio
 
-**A light weight web app for my frends to have climb sessions together.**
+**A light weight web app for my friends to have climb sessions together.**
