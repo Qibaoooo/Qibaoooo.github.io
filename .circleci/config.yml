@@ -31,7 +31,7 @@ jobs:
         at: ~/
     - run:
         name: Run Cypress tests
-        command: 'cd ./tests && npx cypress run'
+        command: 'cd ./tests && npx cypress run --record'
 workflows:
   build:
     jobs:
