@@ -3,7 +3,7 @@ orbs:
   cypress: cypress-io/cypress@1
 workflows:
   build:
-    working_directory: /home/circleci/project/tests/
+    working_directory: '/home/circleci/project/tests/'
     jobs:
       - cypress/run:
           record: true
