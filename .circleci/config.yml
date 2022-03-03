@@ -1,14 +1,8 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
-jobs:
-  build:
-    working_directory: '/home/circleci/project/tests/'
-    cypress/run:
-      record: true
-      
 workflows:
   build:
     jobs:
-      - build
-          
+      - cypress/run:
+        working_directory: ~/project/tests/
