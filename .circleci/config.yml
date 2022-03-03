@@ -12,7 +12,7 @@ jobs:
         - cache-{{ .Branch }}-{{ checksum "package.json" }}
     - run:
         name: check
-        command: pwd
+        command: pwd; ls; ls ./tests;
     - run:
         name: Npm CI
         command: npm ci
