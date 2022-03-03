@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "echo Hello, World!; pwd; whoami; ls; ls ./Qibaoooo.github.io"
+          command: "echo Hello, World!; pwd; whoami; ls; ls /home/circleci/project/tests"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
