@@ -1,7 +1,7 @@
 version: 2
 jobs:
   cypress/run:
-    working_directory: ~/project/tests
+    working_directory: /home/circleci/project/tests/
     docker:
     - image: cypress/base:12.14.0
     parallelism: 1
