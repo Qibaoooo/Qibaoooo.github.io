@@ -11,6 +11,9 @@ jobs:
         keys:
         - cache-{{ .Branch }}-{{ checksum "package.json" }}
     - run:
+        name: check
+        command: pwd
+    - run:
         name: Npm CI
         command: npm ci
     - run:
