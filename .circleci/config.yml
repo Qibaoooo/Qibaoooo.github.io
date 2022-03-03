@@ -4,5 +4,4 @@ orbs:
 workflows:
   build:
     jobs:
-      - cypress/run:
-        working_directory: ~/project/tests/
+      - cypress/run
