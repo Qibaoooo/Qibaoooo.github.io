@@ -3,10 +3,8 @@ orbs:
   cypress: cypress-io/cypress@1
 workflows:
   build:
-#     working_directory: '/home/circleci/project/tests/'
     jobs:
-      - run:
-          command: "cd tests"
-      - cypress/run:
-          record: true
+      working_directory: '/home/circleci/project/tests/'
+      cypress/run:
+        record: true
           
