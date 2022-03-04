@@ -11,7 +11,7 @@ jobs:
         - cache-{{ .Branch }}-{{ checksum "package.json" }}
     - run:
         name: check
-        command: pwd; ls; cd ./tests && ls;
+        command: pwd; ls; cd ./tests && ls;python --version;
     - run:
         name: Npm CI
         command: cd ./tests && npm ci
