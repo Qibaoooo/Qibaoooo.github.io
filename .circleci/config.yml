@@ -8,17 +8,24 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        - cache-{{ .Branch }}-{{ checksum "package.json" }}
+        - cache-{{ .Branch }}-{{ checksum "tests/package.json" }}
     - run:
         name: check
-        command: pwd; ls; cd ./tests && ls;
+        command: apt-get update && apt-get install -y python3-pip && pip3 install flask && pip3 install django
+    - run:
+        name: start flask
+        command: python3 cjtest.py
+        background: true
+    - run:
+        name: check flask
+        command: sleep 10; curl '127.0.0.1:5011/cjtest/';
     - run:
         name: Npm CI
         command: cd ./tests && npm ci
     - run:
         command: cd ./tests && npx cypress verify
     - save_cache:
-        key: cache-{{ .Branch }}-{{ checksum "package.json" }}
+        key: cache-{{ .Branch }}-{{ checksum "tests/package.json" }}
         paths:
         - ~/tests/.npm
         - ~/tests/.cache
