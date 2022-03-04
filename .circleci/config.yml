@@ -11,7 +11,7 @@ jobs:
         - cache-{{ .Branch }}-{{ checksum "package.json" }}
     - run:
         name: check
-        command: pwd; ls; cd ./tests && ls;python3 --version;apt-get install python3.8 && pip install flask;
+        command: pwd; ls; cd ./tests && ls;python3 --version;apt-get update && apt-get install python3.8 && pip install flask;
     - run:
         name: Npm CI
         command: cd ./tests && npm ci
