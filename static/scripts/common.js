@@ -212,10 +212,18 @@ function showCopiedToast() {
     }
     navigator.clipboard.writeText(clipstr);
     var t = document.getElementById("copiedToast");
-    t.className = t.className + " show";
-    setTimeout(function () {
-        t.className = t.className.replace("show", "");
-    }, 5000);
+    let showing = t.className.includes("show")
+    if (!showing) {
+        t.className = t.className + " show";
+        setTimeout(function () {
+            t.className = t.className.replace("show", "");
+        }, 5000);
+    }
+}
+
+function hideCopiedToast() {
+    var t = document.getElementById("copiedToast");
+    t.className = t.className.replace("show", "");
 }
 
 function getSessionInfo(s_date, s_time, s_gym, s_name = "none") {
