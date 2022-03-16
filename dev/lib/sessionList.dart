@@ -46,6 +46,18 @@ class _SessionListState extends State<SessionList> {
       toCopy = toCopy + s.toPrettyString() + "\n";
     }
     Clipboard.setData(ClipboardData(text: toCopy));
+    if (_sessions.isNotEmpty) {
+      const snackBar = SnackBar(
+        margin: EdgeInsets.fromLTRB(100, 30, 100, 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Copied.',
+          style: TextStyle(color: kShrineBrown900),
+        ),
+        backgroundColor: kShrinePink100,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   void _deleteSession(String id) {
@@ -285,7 +297,7 @@ class _SessionListState extends State<SessionList> {
           onPressed: () {
             copySessions();
           },
-          icon: Icon(Icons.copy_outlined)),
+          icon: const Icon(Icons.copy_outlined)),
     );
   }
 }

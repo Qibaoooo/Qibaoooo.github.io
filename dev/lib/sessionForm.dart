@@ -139,6 +139,8 @@ class _SessionFormState extends State<SessionForm> {
     for (final row in _rows) {
       if (!validateInput(row)) {
         const snackBar = SnackBar(
+          margin: EdgeInsets.fromLTRB(100, 30, 100, 30),
+          behavior: SnackBarBehavior.floating,
           content: Text('Please fill in all fields.'),
           backgroundColor: Colors.amber,
         );
