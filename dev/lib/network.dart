@@ -65,6 +65,15 @@ Future<http.Response> apiCreateSession(Session sess) {
   return resp;
 }
 
+Future<http.Response> apiArchiveSession(Session sess) {
+  Future<http.Response> resp;
+  const _url =
+      "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/archive.json";
+  String _postData = jsonEncode(sess.toPrettyString());
+  resp = http.post(Uri.parse(_url), body: _postData);
+  return resp;
+}
+
 Future<http.Response> apiUpdateClimbers(String id, String name) {
   Future<http.Response> resp;
   var _url =

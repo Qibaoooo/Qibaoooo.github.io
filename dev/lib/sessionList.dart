@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,10 +50,49 @@ class _SessionListState extends State<SessionList> {
     Clipboard.setData(ClipboardData(text: toCopy));
     if (_sessions.isNotEmpty) {
       const snackBar = SnackBar(
-        margin: EdgeInsets.fromLTRB(100, 30, 100, 30),
+        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
         behavior: SnackBarBehavior.floating,
         content: Text(
           'Copied.',
+          style: TextStyle(color: kShrineBrown900),
+        ),
+        backgroundColor: kShrinePink100,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  void archiveSessions() {
+    var now = DateTime.now();
+    var yester = DateTime(now.year, now.month, now.day - 1);
+    var archived = [];
+    for (var s in _sessions) {
+      var day = s.date.split(" ")[0];
+      if (DateTime.parse(day).isBefore(yester)) {
+        print('archiving ');
+        print(s.toPrettyString());
+        apiArchiveSession(s);
+        apiDeleteSession(s.id).then((value) => {fetchSession()});
+        archived.add(s);
+      }
+    }
+    if (archived.isNotEmpty) {
+      var snackBar = SnackBar(
+        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Archived ' + archived.length.toString() + ' session(s).',
+          style: TextStyle(color: kShrineBrown900),
+        ),
+        backgroundColor: kShrinePink100,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      const snackBar = SnackBar(
+        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'No session to be archived.',
           style: TextStyle(color: kShrineBrown900),
         ),
         backgroundColor: kShrinePink100,
@@ -293,11 +334,20 @@ class _SessionListState extends State<SessionList> {
             constraints: const BoxConstraints(maxWidth: 500, minWidth: 400),
             child: getSessionCards()),
       ),
-      floatingActionButton: IconButton(
-          onPressed: () {
-            copySessions();
-          },
-          icon: const Icon(Icons.copy_outlined)),
+      floatingActionButton:
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        IconButton(
+            onPressed: () {
+              copySessions();
+            },
+            icon: const Icon(Icons.copy_outlined)),
+        SizedBox(width: 30),
+        IconButton(
+            onPressed: () {
+              archiveSessions();
+            },
+            icon: const Icon(Icons.archive_outlined))
+      ]),
     );
   }
 }
