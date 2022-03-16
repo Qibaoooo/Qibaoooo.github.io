@@ -59,6 +59,7 @@ class _SessionFormState extends State<SessionForm> {
       _selectedAP = "AM/PM";
       _selectedGym = "gym";
       _dateController.text = "set date and time";
+      _climbersController.text = "";
       FocusScope.of(context).unfocus();
     });
   }
