@@ -416,7 +416,7 @@ class _SessionFormState extends State<SessionForm> {
                     },
                     openBuilder: (context, action) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 100, 30, 30),
+                        padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
                         child: Column(children: [
                           const ListTile(
                             title: Center(child: Text("Past Sessions")),
