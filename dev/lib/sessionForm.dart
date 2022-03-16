@@ -8,15 +8,15 @@ import 'package:shrine/colors.dart';
 import 'package:shrine/network.dart';
 
 final _gyms = <String>[
-  "B+_JE",
-  "B+_Kallang",
+  "B+(JE)",
+  "B+(Kallang)",
   "B8a",
-  "BM_DownTown",
-  "BM_Rocher",
-  "BM_TaiSeng",
-  "CC_Funan",
-  "CC_Novena",
-  "CC_SportsHub",
+  "BM(DownTown)",
+  "BM(Rocher)",
+  "BM(TaiSeng)",
+  "CC(Funan)",
+  "CC(Novena)",
+  "CC(SportsHub)",
   "Kinetics",
   "OYEYO",
   "T-Hall",
