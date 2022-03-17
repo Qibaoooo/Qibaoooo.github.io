@@ -1,6 +1,7 @@
 // {"-My6Zz6NGCwCItAxuZAa":{"date":"2022-03-17 THU","gym":"BM_TaiSeng","name":"qibao","time_1":"11","time_2":"30","time_3":"AM"}}
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class Session implements Comparable<Session> {
@@ -144,4 +145,10 @@ Future<List> apiGetArchivedSession() async {
     results.add(parsed[key].toString());
   }
   return results;
+}
+
+Future<void> loginAsVisitor() async {
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInAnonymously();
+  print(userCredential.user);
 }

@@ -1,4 +1,4 @@
-import 'package:climbjio/homeDrawer.dart';
+import 'package:climbjio/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:climbjio/colors.dart';
 import 'package:climbjio/sessionForm.dart';
@@ -13,13 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late var _userNickName = "";
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Builder(builder: (BuildContext context) {
         return Scaffold(
-          drawer: homeDrawer(),
           drawerEnableOpenDragGesture: false,
           appBar: AppBar(
             title: const Center(child: Text('ClimbJio')),
@@ -30,14 +31,7 @@ class _HomePageState extends State<HomePage> {
                 Tab(text: ('Let\'s Jio')),
               ],
             ),
-            leading: Builder(builder: (context) {
-              return IconButton(
-                icon: const FaIcon(FontAwesomeIcons.user),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            }),
+            leading: userProfile(context),
           ),
           body: const TabBarView(children: [
             SessionList(),
