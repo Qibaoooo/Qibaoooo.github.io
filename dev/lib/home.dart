@@ -1,3 +1,5 @@
+import 'package:climbjio/components/auth/user_manager.dart';
+import 'package:climbjio/globals.dart';
 import 'package:climbjio/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:climbjio/colors.dart';
@@ -13,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late var _userNickName = "";
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           drawerEnableOpenDragGesture: false,
           appBar: AppBar(
-            title: const Center(child: Text('ClimbJio')),
+            title: Center(child: Text('hi, ' + userManager.nickName)),
             bottom: const TabBar(
               labelColor: kClimbjioBrown900,
               tabs: [

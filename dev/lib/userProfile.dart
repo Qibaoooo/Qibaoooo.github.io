@@ -22,9 +22,15 @@ Widget userProfile(context) {
                   height: 300,
                   child: Padding(
                     padding: EdgeInsets.all(30),
-                    child: Wrap(children: [
+                    child: Wrap(spacing: 20, children: [
                       IconButton(
                         icon: FaIcon(FontAwesomeIcons.signInAlt),
+                        onPressed: () {
+                          loginAsVisitor();
+                        },
+                      ),
+                      IconButton(
+                        icon: FaIcon(FontAwesomeIcons.google),
                         onPressed: () {
                           loginAsVisitor();
                         },
