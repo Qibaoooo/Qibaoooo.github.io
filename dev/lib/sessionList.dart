@@ -166,7 +166,7 @@ class _SessionListState extends State<SessionList> {
                 color: kClimbjioPink50,
                 shadowColor: kClimbjioBrown400,
                 child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const SizedBox(
                         width: 20,
@@ -179,27 +179,24 @@ class _SessionListState extends State<SessionList> {
                             Spacer(),
                             FaIcon(
                               FontAwesomeIcons.calendarDay,
-                              size: 20,
+                              size: 15,
                               color: kClimbjioBrown900,
                             ),
                             Spacer(),
-                            Icon(
-                              Icons.timer_rounded,
-                              size: 20,
+                            FaIcon(
+                              FontAwesomeIcons.clock,
+                              size: 15,
                               color: kClimbjioBrown900,
                             ),
                             Spacer(),
-                            Icon(
-                              Icons.location_pin,
-                              size: 20,
+                            FaIcon(
+                              FontAwesomeIcons.locationArrow,
+                              size: 15,
                               color: kClimbjioBrown900,
                             ),
                             Spacer(),
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        width: 8,
                       ),
                       Flexible(
                         flex: 4,
@@ -217,21 +214,23 @@ class _SessionListState extends State<SessionList> {
                         ),
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: 10,
                       ),
                       Flexible(
                           flex: 5,
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: SizedBox(
+                            width: 300,
+                            height: 150,
                             child: Wrap(
                               alignment: WrapAlignment.spaceEvenly,
                               children: [
-                                const Center(
-                                    child: Icon(Icons.people_alt_outlined)),
                                 Text(s.name),
                               ],
                             ),
                           )),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: OpenContainer(
@@ -295,11 +294,13 @@ class _SessionListState extends State<SessionList> {
                                               s.name + ", " + _joinName.text);
                                           action();
                                         },
-                                        icon: const Icon(Icons.send)),
+                                        icon: const FaIcon(
+                                            FontAwesomeIcons.paperPlane)),
                                   ),
                                   const SizedBox(height: 60),
                                   IconButton(
-                                    icon: const Icon(Icons.close_rounded),
+                                    icon: const FaIcon(
+                                        FontAwesomeIcons.windowClose),
                                     onPressed: () {
                                       action();
                                     },
@@ -331,7 +332,7 @@ class _SessionListState extends State<SessionList> {
             onPressed: () {
               copySessions();
             },
-            icon: const Icon(Icons.copy_outlined)),
+            icon: const FaIcon(FontAwesomeIcons.copy)),
         const SizedBox(width: 30),
         Badge(
           showBadge: _oldSessions.isNotEmpty,
