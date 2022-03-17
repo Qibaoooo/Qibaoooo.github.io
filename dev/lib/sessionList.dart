@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:animations/animations.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:climbjio/colors.dart';
@@ -16,12 +17,15 @@ class SessionList extends StatefulWidget {
 
 class _SessionListState extends State<SessionList> {
   late List<Session> _sessions = <Session>[];
+  late List<Session> _oldSessions = <Session>[];
   final _joinName = TextEditingController();
 
   void fetchSession() {
     apiGetSession().then((value) {
       setState(() {
         _sessions = value;
+        _sessions.sort();
+        _oldSessions = getOldSessions(_sessions);
       });
     });
   }
@@ -30,6 +34,19 @@ class _SessionListState extends State<SessionList> {
   void initState() {
     super.initState();
     fetchSession();
+  }
+
+  List<Session> getOldSessions(sessions) {
+    List<Session> old = [];
+    var now = DateTime.now();
+    var yester = DateTime(now.year, now.month, now.day - 1);
+    for (var s in _sessions) {
+      var day = s.date.split(" ")[0];
+      if (DateTime.parse(day).isBefore(yester)) {
+        old.add(s);
+      }
+    }
+    return old;
   }
 
   void updateClimbersForSession(String id, String name) {
@@ -61,8 +78,6 @@ class _SessionListState extends State<SessionList> {
     for (var s in _sessions) {
       var day = s.date.split(" ")[0];
       if (DateTime.parse(day).isBefore(yester)) {
-        print('archiving ');
-        print(s.toPrettyString());
         apiArchiveSession(s);
         apiDeleteSession(s.id).then((value) => {fetchSession()});
         archived.add(s);
@@ -316,12 +331,16 @@ class _SessionListState extends State<SessionList> {
               copySessions();
             },
             icon: const Icon(Icons.copy_outlined)),
-        SizedBox(width: 30),
-        IconButton(
-            onPressed: () {
-              archiveSessions();
-            },
-            icon: const Icon(Icons.archive_outlined))
+        const SizedBox(width: 30),
+        Badge(
+          showBadge: _oldSessions.isNotEmpty,
+          position: const BadgePosition(top: 0.1),
+          child: IconButton(
+              onPressed: () {
+                archiveSessions();
+              },
+              icon: const Icon(Icons.archive_outlined)),
+        )
       ]),
     );
   }

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class Session {
+class Session implements Comparable<Session> {
   late String date;
   late String gym;
   late String name;
@@ -11,6 +11,31 @@ class Session {
   late String time2;
   late String time3;
   late String id;
+
+  @override
+  int compareTo(Session other) {
+    var selfDay = DateTime.parse(date.split(" ")[0]);
+    var otherDay = DateTime.parse(other.date.split(" ")[0]);
+    if (selfDay.isAfter(otherDay)) {
+      return 1;
+    }
+    if (selfDay.isBefore(otherDay)) {
+      return -1;
+    }
+    if ((time3 == 'AM') && (other.time3 == "PM")) {
+      return -1;
+    }
+    if ((time3 == 'PM') && (other.time3 == "AM")) {
+      return 1;
+    }
+    if (num.tryParse(time1)! < num.tryParse(other.time1)!) {
+      return -1;
+    }
+    if (int.tryParse(time1)! > int.tryParse(other.time1)!) {
+      return 1;
+    }
+    return 0;
+  }
 
   Session(
       {required this.date,
