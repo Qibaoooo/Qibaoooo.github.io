@@ -1,7 +1,10 @@
 // {"-My6Zz6NGCwCItAxuZAa":{"date":"2022-03-17 THU","gym":"BM_TaiSeng","name":"qibao","time_1":"11","time_2":"30","time_3":"AM"}}
 import 'dart:convert';
 
+import 'package:climbjio/components/auth/user_manager.dart';
+import 'package:climbjio/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
 class Session implements Comparable<Session> {
@@ -151,4 +154,30 @@ Future<void> loginAsVisitor() async {
   UserCredential userCredential =
       await FirebaseAuth.instance.signInAnonymously();
   print(userCredential.user);
+}
+
+Future<void> logout() async {
+  userManager = UserManager();
+  await FirebaseAuth.instance.signOut();
+}
+
+Future<void> loginWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser =
+      await GoogleSignIn(clientId: clintIdGoogleSignin).signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  userManager.userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+  userManager.loadFromData(userManager.userCredential);
 }

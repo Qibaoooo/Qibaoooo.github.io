@@ -12,4 +12,11 @@ class UserManager {
   UserManager() {
     this.nickName = "climber";
   }
+
+  void loadFromData(UserCredential data) {
+    var newNickName = data.user!.displayName!;
+    if (newNickName.isNotEmpty) {
+      this.nickName = newNickName;
+    }
+  }
 }

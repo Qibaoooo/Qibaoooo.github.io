@@ -15,6 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                 Tab(text: ('Let\'s Jio')),
               ],
             ),
-            leading: userProfile(context),
+            leading: userProfile(context, refresh),
           ),
           body: const TabBarView(children: [
             SessionList(),

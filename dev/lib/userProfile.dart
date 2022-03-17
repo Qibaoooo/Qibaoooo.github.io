@@ -1,9 +1,14 @@
+import 'dart:ffi';
+
 import 'package:climbjio/network.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-Widget userProfile(context) {
+Widget userProfile(context, refreshfunction) {
   bool expanded = false;
+
+  // Widget v2 = Flow(delegate: UserProfileFlowDelegate());
+
   return IconButton(
       onPressed: () {
         showDialog(
@@ -26,13 +31,14 @@ Widget userProfile(context) {
                       IconButton(
                         icon: FaIcon(FontAwesomeIcons.signInAlt),
                         onPressed: () {
-                          loginAsVisitor();
+                          logout().then((value) => {refreshfunction()});
                         },
                       ),
                       IconButton(
                         icon: FaIcon(FontAwesomeIcons.google),
                         onPressed: () {
-                          loginAsVisitor();
+                          loginWithGoogle()
+                              .then((value) => {refreshfunction()});
                         },
                       ),
                     ]),
@@ -43,3 +49,8 @@ Widget userProfile(context) {
       },
       icon: FaIcon(FontAwesomeIcons.user));
 }
+
+// class UserProfileFlowDelegate extends FlowDelegate {
+//   @override
+//   void pai
+// }

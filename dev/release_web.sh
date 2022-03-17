@@ -3,7 +3,7 @@
 set -x
 
 cd C:\\Source\\climbjio\\dev
-flutter build web --web-renderer html
+flutter build web --web-renderer html --base-href /Qibaoooo.github.io --web-port 5000
 echo -e '===>flutter build web DONE\n\n'
 
 rsync -av --exclude='index.html' build/web/ ../.
