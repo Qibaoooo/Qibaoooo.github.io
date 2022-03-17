@@ -3,7 +3,7 @@
 set -x
 
 cd C:\\Source\\climbjio\\dev
-flutter build web
+flutter build web --web-renderer html
 echo -e '===>flutter build web DONE\n\n'
 
 rsync -av --exclude='index.html' build/web/ ../.

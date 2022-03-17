@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:climbjio/colors.dart';
 import 'package:climbjio/components/show_snackbar.dart';
 import 'package:climbjio/network.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionList extends StatefulWidget {
   const SessionList({Key? key}) : super(key: key);
@@ -176,8 +177,8 @@ class _SessionListState extends State<SessionList> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Spacer(),
-                            Icon(
-                              Icons.calendar_month,
+                            FaIcon(
+                              FontAwesomeIcons.calendarDay,
                               size: 20,
                               color: kClimbjioBrown900,
                             ),
