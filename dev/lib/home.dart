@@ -27,7 +27,13 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           drawerEnableOpenDragGesture: false,
           appBar: AppBar(
-            title: Center(child: Text('hi, ' + userManager.nickName)),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('hi,'),
+                userProfileEntry(),
+              ],
+            ),
             bottom: const TabBar(
               labelColor: kClimbjioBrown900,
               tabs: [
@@ -35,7 +41,6 @@ class _HomePageState extends State<HomePage> {
                 Tab(text: ('Let\'s Jio')),
               ],
             ),
-            leading: userProfile(context, refresh),
           ),
           body: const TabBarView(children: [
             SessionList(),
