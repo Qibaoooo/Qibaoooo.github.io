@@ -7,21 +7,5 @@ Widget userProfile(context, refreshfunction) {
   bool expanded = false;
 
   return IconButton(
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Dialog(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                alignment: Alignment.topLeft,
-                // shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(40)),
-                child: Wrap(
-                  alignment: WrapAlignment.start,
-                ),
-              );
-            });
-      },
-      icon: const FaIcon(FontAwesomeIcons.user));
+      onPressed: () {}, icon: const FaIcon(FontAwesomeIcons.user));
 }

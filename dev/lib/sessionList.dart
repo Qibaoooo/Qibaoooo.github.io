@@ -321,6 +321,9 @@ class _SessionListState extends State<SessionList> {
                                 ]),
                               );
                             }),
+                      ),
+                      SizedBox(
+                        width: 10,
                       )
                     ]),
               ),
