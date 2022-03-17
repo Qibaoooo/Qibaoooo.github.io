@@ -44,7 +44,6 @@ class _SessionFormState extends State<SessionForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     apiGetArchivedSession().then((value) {
       setState(() {
