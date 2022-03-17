@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(mdc_100_series LANGUAGES CXX)
+project(climbjio LANGUAGES CXX)
 
-set(BINARY_NAME "mdc_100_series")
+set(BINARY_NAME "climbjio")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,4 +1,4 @@
-package com.example.mdc_100_series
+package com.example.climbjio
 
 import io.flutter.embedding.android.FlutterActivity
 

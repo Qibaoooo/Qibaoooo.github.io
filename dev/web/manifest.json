@@ -1,6 +1,6 @@
 {
-    "name": "mdc_100_series",
-    "short_name": "mdc_100_series",
+    "name": "climbjio",
+    "short_name": "climbjio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
