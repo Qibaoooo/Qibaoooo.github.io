@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shrine/colors.dart';
+import 'package:climbjio/colors.dart';
 
 void showSnackbar({context, message = String, isAlert = false}) {
   var snackBar = SnackBar(

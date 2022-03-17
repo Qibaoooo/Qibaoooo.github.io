@@ -3,9 +3,9 @@ import 'dart:html';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shrine/colors.dart';
-import 'package:shrine/components/show_snackbar.dart';
-import 'package:shrine/network.dart';
+import 'package:climbjio/colors.dart';
+import 'package:climbjio/components/show_snackbar.dart';
+import 'package:climbjio/network.dart';
 
 class SessionList extends StatefulWidget {
   const SessionList({Key? key}) : super(key: key);

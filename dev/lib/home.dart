@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shrine/colors.dart';
-import 'package:shrine/sessionForm.dart';
-import 'package:shrine/sessionList.dart';
+import 'package:climbjio/colors.dart';
+import 'package:climbjio/sessionForm.dart';
+import 'package:climbjio/sessionList.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

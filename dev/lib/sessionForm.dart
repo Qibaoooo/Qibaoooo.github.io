@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:shrine/colors.dart';
-import 'package:shrine/components/show_snackbar.dart';
-import 'package:shrine/constAndConfig.dart';
-import 'package:shrine/network.dart';
+import 'package:climbjio/colors.dart';
+import 'package:climbjio/components/show_snackbar.dart';
+import 'package:climbjio/constAndConfig.dart';
+import 'package:climbjio/network.dart';
 
 final _gyms = <String>[
   "B+(JE)",
