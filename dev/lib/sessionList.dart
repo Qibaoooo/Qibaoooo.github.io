@@ -172,43 +172,56 @@ class _SessionListState extends State<SessionList> {
                         width: 20,
                       ),
                       Flexible(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Spacer(),
-                            FaIcon(
-                              FontAwesomeIcons.calendarDay,
-                              size: 15,
-                              color: kClimbjioBrown900,
-                            ),
-                            Spacer(),
-                            FaIcon(
-                              FontAwesomeIcons.clock,
-                              size: 15,
-                              color: kClimbjioBrown900,
-                            ),
-                            Spacer(),
-                            FaIcon(
-                              FontAwesomeIcons.locationArrow,
-                              size: 15,
-                              color: kClimbjioBrown900,
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                      ),
-                      Flexible(
                         flex: 4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Spacer(),
-                            Text(s.date),
+                            Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.calendarDay,
+                                  size: 15,
+                                  color: kClimbjioBrown900,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(s.date),
+                              ],
+                            ),
                             const Spacer(),
-                            Text(s.time1 + " : " + s.time2 + "  -  " + s.time3),
+                            Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.clock,
+                                  size: 15,
+                                  color: kClimbjioBrown900,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(s.time1 +
+                                    " : " +
+                                    s.time2 +
+                                    "  -  " +
+                                    s.time3),
+                              ],
+                            ),
                             const Spacer(),
-                            Text(s.gym),
+                            Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.locationArrow,
+                                  size: 15,
+                                  color: kClimbjioBrown900,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(s.gym),
+                              ],
+                            ),
                             const Spacer(),
                           ],
                         ),

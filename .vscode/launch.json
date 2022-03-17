@@ -3,5 +3,19 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+    {
+        "name": "Dart: Attach to Process",
+        "type": "dart",
+        "request": "attach"
+    },
+    {
+        "name": "Flutter: Attach to Device",
+        "type": "dart",
+        "request": "attach",
+        "args": ["--web-renderer=html","--web-port=5000"],
+        "deviceId": "Chrome"
+    }
+    ]
 }
+
