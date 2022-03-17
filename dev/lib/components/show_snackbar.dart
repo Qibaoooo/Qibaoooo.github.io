@@ -8,9 +8,9 @@ void showSnackbar({context, message = String, isAlert = false}) {
     elevation: 8.0,
     content: Text(
       message,
-      style: const TextStyle(color: kShrineBrown900),
+      style: const TextStyle(color: kClimbjioBrown900),
     ),
-    backgroundColor: isAlert ? Colors.amber : kShrinePink100,
+    backgroundColor: isAlert ? Colors.amber : kClimbjioPink100,
     duration: const Duration(seconds: 1),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

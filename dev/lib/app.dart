@@ -5,8 +5,8 @@ import 'home.dart';
 import 'sessionForm.dart';
 import 'colors.dart';
 
-class ShrineApp extends StatelessWidget {
-  const ShrineApp({Key? key}) : super(key: key);
+class ClimbjioApp extends StatelessWidget {
+  const ClimbjioApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ShrineApp extends StatelessWidget {
     return MaterialApp(
       title: 'ClimbJio',
       home: const HomePage(),
-      theme: _kShrineTheme,
+      theme: _kClimbjioTheme,
     );
   }
 
@@ -31,25 +31,25 @@ class ShrineApp extends StatelessWidget {
   }
 }
 
-final ThemeData _kShrineTheme = _buildShrineTheme();
+final ThemeData _kClimbjioTheme = _buildClimbjioTheme();
 
-ThemeData _buildShrineTheme() {
+ThemeData _buildClimbjioTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
     colorScheme: base.colorScheme.copyWith(
-      primary: kShrinePink100,
-      onPrimary: kShrineBrown900,
-      secondary: kShrineBrown400,
-      error: kShrineErrorRed,
+      primary: kClimbjioPink100,
+      onPrimary: kClimbjioBrown900,
+      secondary: kClimbjioBrown400,
+      error: kClimbjioErrorRed,
     ),
-    textTheme: _buildShrineTextTheme(base.textTheme),
+    textTheme: _buildClimbjioTextTheme(base.textTheme),
     textSelectionTheme:
-        const TextSelectionThemeData(selectionColor: kShrinePink100),
+        const TextSelectionThemeData(selectionColor: kClimbjioPink100),
     inputDecorationTheme: const InputDecorationTheme(
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(
           width: 2.0,
-          color: kShrineBrown900,
+          color: kClimbjioBrown900,
         ),
       ),
       border: UnderlineInputBorder(),
@@ -57,7 +57,7 @@ ThemeData _buildShrineTheme() {
   );
 }
 
-TextTheme _buildShrineTextTheme(TextTheme base) {
+TextTheme _buildClimbjioTextTheme(TextTheme base) {
   return base
       .copyWith(
         headline5: base.headline5!.copyWith(
@@ -77,9 +77,7 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
       )
       .apply(
         fontFamily: 'Rubik',
-        displayColor: kShrineBrown900,
-        bodyColor: kShrineBrown900,
+        displayColor: kClimbjioBrown900,
+        bodyColor: kClimbjioBrown900,
       );
 }
-
-// TODO: Build a Shrine Text Theme (103)

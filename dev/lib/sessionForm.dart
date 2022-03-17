@@ -378,7 +378,7 @@ class _SessionFormState extends State<SessionForm> {
           style: Theme.of(context)
               .textTheme
               .headline5
-              ?.apply(color: kShrineBrown400),
+              ?.apply(color: kClimbjioBrown400),
         ),
       ),
     );
@@ -407,7 +407,7 @@ class _SessionFormState extends State<SessionForm> {
                 padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                 // TODO: animate this
                 child: OpenContainer(
-                    closedColor: kShrineBrown400,
+                    closedColor: kClimbjioBrown400,
                     closedBuilder: (context, action) {
                       return TextButton(
                           child: const Text('See Past Sessions'),

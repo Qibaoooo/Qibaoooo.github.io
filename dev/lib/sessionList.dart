@@ -98,7 +98,7 @@ class _SessionListState extends State<SessionList> {
                   },
                   child: Text(
                     "Nah",
-                    style: TextStyle(color: kShrineBrown400),
+                    style: TextStyle(color: kClimbjioBrown400),
                   )),
               TextButton(
                   onPressed: () {
@@ -147,8 +147,8 @@ class _SessionListState extends State<SessionList> {
               },
               child: Card(
                 elevation: 3,
-                color: kShrinePink50,
-                shadowColor: kShrineBrown400,
+                color: kClimbjioPink50,
+                shadowColor: kClimbjioBrown400,
                 child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -164,19 +164,19 @@ class _SessionListState extends State<SessionList> {
                             Icon(
                               Icons.calendar_month,
                               size: 20,
-                              color: kShrineBrown900,
+                              color: kClimbjioBrown900,
                             ),
                             Spacer(),
                             Icon(
                               Icons.timer_rounded,
                               size: 20,
-                              color: kShrineBrown900,
+                              color: kClimbjioBrown900,
                             ),
                             Spacer(),
                             Icon(
                               Icons.location_pin,
                               size: 20,
-                              color: kShrineBrown900,
+                              color: kClimbjioBrown900,
                             ),
                             Spacer(),
                           ],
@@ -219,7 +219,7 @@ class _SessionListState extends State<SessionList> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: OpenContainer(
-                            closedColor: kShrinePink300,
+                            closedColor: kClimbjioPink300,
                             closedBuilder: ((context, action) {
                               return IconButton(
                                 onPressed: () {
@@ -228,7 +228,7 @@ class _SessionListState extends State<SessionList> {
                                 icon: const Icon(
                                   Icons.add,
                                   size: 20,
-                                  color: kShrineBrown900,
+                                  color: kClimbjioBrown900,
                                 ),
                               );
                             }),
