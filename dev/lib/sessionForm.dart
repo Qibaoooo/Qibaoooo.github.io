@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:shrine/colors.dart';
+import 'package:shrine/components/show_snackbar.dart';
+import 'package:shrine/constAndConfig.dart';
 import 'package:shrine/network.dart';
 
 final _gyms = <String>[
@@ -58,7 +60,7 @@ class _SessionFormState extends State<SessionForm> {
       _selectedMin = "min";
       _selectedAP = "AM/PM";
       _selectedGym = "gym";
-      _dateController.text = "set date and time";
+      _dateController.text = "";
       _climbersController.text = "";
       FocusScope.of(context).unfocus();
     });
@@ -138,13 +140,10 @@ class _SessionFormState extends State<SessionForm> {
     final _rows = ["DATETIME", "GYM", "CLIMBERS"];
     for (final row in _rows) {
       if (!validateInput(row)) {
-        const snackBar = SnackBar(
-          margin: EdgeInsets.fromLTRB(100, 30, 100, 30),
-          behavior: SnackBarBehavior.floating,
-          content: Text('Please fill in all fields.'),
-          backgroundColor: Colors.amber,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        showSnackbar(
+            context: context,
+            message: 'Please fill in all fields.',
+            isAlert: true);
         return;
       }
     }
@@ -286,7 +285,7 @@ class _SessionFormState extends State<SessionForm> {
         controller: _dateController,
         onTap: () => _selectDate(context),
         decoration: InputDecoration(
-            labelText: "set date and time",
+            labelText: INPUT_DECO_LABEL_DATETIME,
             labelStyle:
                 TextStyle(color: Theme.of(context).colorScheme.secondary)),
       ),

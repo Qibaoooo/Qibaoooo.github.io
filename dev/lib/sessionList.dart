@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shrine/colors.dart';
+import 'package:shrine/components/show_snackbar.dart';
 import 'package:shrine/network.dart';
 
 class SessionList extends StatefulWidget {
@@ -49,16 +50,7 @@ class _SessionListState extends State<SessionList> {
     }
     Clipboard.setData(ClipboardData(text: toCopy));
     if (_sessions.isNotEmpty) {
-      const snackBar = SnackBar(
-        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          'Copied.',
-          style: TextStyle(color: kShrineBrown900),
-        ),
-        backgroundColor: kShrinePink100,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      showSnackbar(context: context, message: 'Copied.');
     }
   }
 
@@ -77,27 +69,10 @@ class _SessionListState extends State<SessionList> {
       }
     }
     if (archived.isNotEmpty) {
-      var snackBar = SnackBar(
-        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          'Archived ' + archived.length.toString() + ' session(s).',
-          style: TextStyle(color: kShrineBrown900),
-        ),
-        backgroundColor: kShrinePink100,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      var msg = 'Archived ' + archived.length.toString() + ' session(s).';
+      showSnackbar(context: context, message: msg);
     } else {
-      const snackBar = SnackBar(
-        margin: EdgeInsets.fromLTRB(100, 30, 100, 70),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          'No session to be archived.',
-          style: TextStyle(color: kShrineBrown900),
-        ),
-        backgroundColor: kShrinePink100,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      showSnackbar(context: context, message: 'No session to be archived.');
     }
   }
 
