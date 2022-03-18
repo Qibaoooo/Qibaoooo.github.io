@@ -37,13 +37,18 @@ class _SessionListState extends State<SessionList> {
     fetchSession();
   }
 
+  DateTime getToday() {
+    var now = DateTime.now();
+    var today = DateTime(now.year, now.month, now.day);
+    return today;
+  }
+
   List<Session> getOldSessions(sessions) {
     List<Session> old = [];
-    var now = DateTime.now();
-    var yester = DateTime(now.year, now.month, now.day - 1);
+    var today = getToday();
     for (var s in _sessions) {
       var day = s.date.split(" ")[0];
-      if (DateTime.parse(day).isBefore(yester)) {
+      if (DateTime.parse(day).isBefore(today)) {
         old.add(s);
       }
     }
@@ -73,12 +78,11 @@ class _SessionListState extends State<SessionList> {
   }
 
   void archiveSessions() {
-    var now = DateTime.now();
-    var yester = DateTime(now.year, now.month, now.day - 1);
+    var today = getToday();
     var archived = [];
     for (var s in _sessions) {
       var day = s.date.split(" ")[0];
-      if (DateTime.parse(day).isBefore(yester)) {
+      if (DateTime.parse(day).isBefore(today)) {
         apiArchiveSession(s);
         apiDeleteSession(s.id).then((value) => {fetchSession()});
         archived.add(s);
