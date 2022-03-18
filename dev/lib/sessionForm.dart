@@ -104,30 +104,55 @@ class _SessionFormState extends State<SessionForm> {
     });
   }
 
+  bool _enableAlert = true;
   Future<void> _setClimbers(String v) async {
+    // bool valid = RegExp("^[a-zA-Z,\u4E00-\u9FFF\\s]*\$").hasMatch(v);
+    // if (!valid) {
+    //   showSnackbar(
+    //       context: context,
+    //       message: 'Only 汉字, letter or comma please!',
+    //       isAlert: true);
+    //   _climbersController.text = _climbers;
+    // } else {
+    // }
     setState(() {
       _climbers = v;
     });
   }
 
+  bool validDatetime = false;
+  bool validGym = false;
+  bool validClimbers = false;
+
   bool validateInput(String rowName) {
     switch (rowName) {
       case "DATETIME":
+        validDatetime = false;
         if (DateTime.tryParse(_dateController.text.split(" ")[0]) != null &&
             _selectedHour != "hour" &&
             _selectedMin != "min" &&
             _selectedAP != "AM/PM") {
+          validDatetime = true;
           return true;
         }
         break;
       case "GYM":
+        validGym = false;
         if (_selectedGym != "gym") {
+          validGym = true;
           return true;
         }
         break;
       case "CLIMBERS":
+        validClimbers = false;
         if (_climbers.isNotEmpty) {
-          return true;
+          bool valid =
+              RegExp("^[a-zA-Z,，\u4E00-\u9FFF\\s]*\$").hasMatch(_climbers);
+          // letters comma 逗号 中文 space
+          if (valid) {
+            validClimbers = true;
+            return true;
+          }
         }
         break;
       default:
@@ -139,10 +164,18 @@ class _SessionFormState extends State<SessionForm> {
     final _rows = ["DATETIME", "GYM", "CLIMBERS"];
     for (final row in _rows) {
       if (!validateInput(row)) {
-        showSnackbar(
-            context: context,
-            message: 'Please fill in all fields.',
-            isAlert: true);
+        if (validDatetime && validGym && _climbers.isNotEmpty) {
+          showSnackbar(
+              context: context,
+              message: 'Only 汉字, letter or comma please!',
+              isAlert: true);
+          _climbersNode.requestFocus();
+        } else {
+          showSnackbar(
+              context: context,
+              message: 'Please fill in all fields.',
+              isAlert: true);
+        }
         return;
       }
     }
@@ -320,9 +353,11 @@ class _SessionFormState extends State<SessionForm> {
     );
   }
 
+  var _climbersNode = FocusNode();
   Widget getInputRowClimbers() {
     return ListTile(
       title: TextField(
+        focusNode: _climbersNode,
         controller: _climbersController,
         onChanged: (_) {
           _setClimbers(_);

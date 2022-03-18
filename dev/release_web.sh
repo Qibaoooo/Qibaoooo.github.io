@@ -12,7 +12,7 @@ rsync -av build/web/ ../.
 echo -e '===>rsync DONE\n\n'
 
 # python release_helpers.py
-echo -e '===>replace base href string DONE\n\n'
+# echo -e '===>replace base href string DONE\n\n'
 
 set +x
 

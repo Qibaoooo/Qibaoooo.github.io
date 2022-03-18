@@ -169,10 +169,10 @@ class _SessionListState extends State<SessionList> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const SizedBox(
-                        width: 20,
+                        width: 10,
                       ),
                       Flexible(
-                        flex: 4,
+                        flex: 10,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -230,15 +230,50 @@ class _SessionListState extends State<SessionList> {
                         width: 10,
                       ),
                       Flexible(
-                          flex: 5,
+                          flex: 14,
                           child: SizedBox(
                             width: 300,
-                            height: 150,
                             child: Wrap(
-                              alignment: WrapAlignment.spaceEvenly,
-                              children: [
-                                Text(s.name),
-                              ],
+                              alignment: WrapAlignment.center,
+                              children: s.nameList().map((name) {
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                      left: 8, right: 8, top: 5),
+                                  child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 1,
+                                                color: Colors.grey,
+                                                offset: Offset(3, 4))
+                                          ],
+                                          // border: Border.all(
+                                          //     width: 1, color: kClimbjioBrown900),
+                                          color: kClimbjioSurfaceWhite,
+                                          gradient: LinearGradient(colors: [
+                                            kClimbjioSurfaceWhite,
+                                            kClimbjioPink50
+                                          ]),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(40))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            3, 3, 5, 5),
+                                        child: Text(name),
+                                      )),
+                                );
+                              }).toList()
+                              // DecoratedBox(
+                              //     decoration: BoxDecoration(
+                              //         border: Border.all(
+                              //             width: 1, color: kClimbjioBrown900),
+                              //         color: kClimbjioPink100,
+                              //         shape: BoxShape.rectangle,
+                              //         borderRadius: BorderRadius.all(
+                              //             Radius.circular(40))),
+                              //     child: Text(s.nameList().toString())),
+                              ,
                             ),
                           )),
                       const SizedBox(

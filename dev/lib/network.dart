@@ -58,6 +58,17 @@ class Session implements Comparable<Session> {
     time3 = json["time_3"];
   }
 
+  List<String> nameList() {
+    if (name.isEmpty) {
+      return ['whoami?'];
+    }
+    var res = <String>[];
+    for (var n in RegExp("[^,，]+").allMatches(name)) {
+      res.add(n.group(0).toString());
+    }
+    return res;
+  }
+
   Map toMap() {
     return {
       "date": date,
