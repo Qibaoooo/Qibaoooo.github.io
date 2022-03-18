@@ -31,7 +31,7 @@ class _userProfileEntryState extends State<userProfileEntry> {
               context: context,
               builder: (context) {
                 return Dialog(
-                  insetPadding: EdgeInsets.only(top: 60, left: 250),
+                  insetPadding: EdgeInsets.only(top: 60, right: 30),
                   elevation: 10,
                   backgroundColor: kClimbjioPink400,
                   alignment: Alignment.topCenter,

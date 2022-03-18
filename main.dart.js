@@ -36380,7 +36380,7 @@ $1(a){var s,r=null,q=A.Su(40),p=this.a
 if(A.b($.Rr().b,"isLoggedin")){s=A.bq("< Tap to logout",r,r,r,r,r,r,r)
 s=A.lm(new A.ax(20,20,20,20),A.cT(r,A.F5(B.AF,r,r),r,new A.afc(p,a),r),r,s,r)
 p=s}else p=A.lm(new A.ax(20,20,20,20),r,r,A.bq("Supported channels: ",r,r,r,r,r,r,r),A.an8(B.lX,A.c([A.cT(r,A.F5(B.AA,r,r),r,new A.afd(p,a),r)],t.p)))
-return A.ah4(B.md,B.z7,new A.d4(new A.af(0,50,0,150),p,r),B.l,10,new A.ax(250,60,0,0),new A.dr(q,B.p))},
+return A.ah4(B.md,B.z7,new A.d4(new A.af(0,50,0,150),p,r),B.l,10,new A.ax(0,60,30,0),new A.dr(q,B.p))},
 $S:336}
 A.afc.prototype={
 $0(){var s=t.H
