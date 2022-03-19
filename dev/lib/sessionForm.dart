@@ -104,17 +104,7 @@ class _SessionFormState extends State<SessionForm> {
     });
   }
 
-  bool _enableAlert = true;
   Future<void> _setClimbers(String v) async {
-    // bool valid = RegExp("^[a-zA-Z,\u4E00-\u9FFF\\s]*\$").hasMatch(v);
-    // if (!valid) {
-    //   showSnackbar(
-    //       context: context,
-    //       message: 'Only 汉字, letter or comma please!',
-    //       isAlert: true);
-    //   _climbersController.text = _climbers;
-    // } else {
-    // }
     setState(() {
       _climbers = v;
     });

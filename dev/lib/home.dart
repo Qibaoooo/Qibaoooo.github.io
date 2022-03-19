@@ -1,11 +1,8 @@
-import 'package:climbjio/components/auth/user_manager.dart';
-import 'package:climbjio/globals.dart';
-import 'package:climbjio/userProfile.dart';
+import 'package:climbjio/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:climbjio/colors.dart';
 import 'package:climbjio/sessionForm.dart';
 import 'package:climbjio/sessionList.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('hi,'),
                 userProfileEntry(),
               ],

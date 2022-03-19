@@ -183,7 +183,7 @@ class _SessionListState extends State<SessionList> {
                             const Spacer(),
                             Row(
                               children: [
-                                FaIcon(
+                                const FaIcon(
                                   FontAwesomeIcons.calendarDay,
                                   size: 15,
                                   color: kClimbjioBrown900,
@@ -197,7 +197,7 @@ class _SessionListState extends State<SessionList> {
                             const Spacer(),
                             Row(
                               children: [
-                                FaIcon(
+                                const FaIcon(
                                   FontAwesomeIcons.clock,
                                   size: 15,
                                   color: kClimbjioBrown900,
@@ -215,7 +215,7 @@ class _SessionListState extends State<SessionList> {
                             const Spacer(),
                             Row(
                               children: [
-                                FaIcon(
+                                const FaIcon(
                                   FontAwesomeIcons.locationArrow,
                                   size: 15,
                                   color: kClimbjioBrown900,
@@ -241,10 +241,10 @@ class _SessionListState extends State<SessionList> {
                               alignment: WrapAlignment.center,
                               children: s.nameList().map((name) {
                                 return Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       left: 8, right: 8, top: 5),
                                   child: DecoratedBox(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           boxShadow: [
                                             BoxShadow(
                                                 blurRadius: 1,
@@ -267,17 +267,7 @@ class _SessionListState extends State<SessionList> {
                                         child: Text(name),
                                       )),
                                 );
-                              }).toList()
-                              // DecoratedBox(
-                              //     decoration: BoxDecoration(
-                              //         border: Border.all(
-                              //             width: 1, color: kClimbjioBrown900),
-                              //         color: kClimbjioPink100,
-                              //         shape: BoxShape.rectangle,
-                              //         borderRadius: BorderRadius.all(
-                              //             Radius.circular(40))),
-                              //     child: Text(s.nameList().toString())),
-                              ,
+                              }).toList(),
                             ),
                           )),
                       const SizedBox(
@@ -361,7 +351,7 @@ class _SessionListState extends State<SessionList> {
                               );
                             }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       )
                     ]),

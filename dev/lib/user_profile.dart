@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:climbjio/colors.dart';
 import 'package:climbjio/constAndConfig.dart';
 import 'package:climbjio/globals.dart';
@@ -32,28 +34,30 @@ class _userProfileEntryState extends State<userProfileEntry> {
               context: context,
               builder: (context) {
                 return Dialog(
-                  insetPadding: EdgeInsets.only(top: 60, right: 30),
+                  insetPadding: const EdgeInsets.only(top: 60, right: 30),
                   elevation: 10,
                   backgroundColor: kClimbjioPink400,
                   alignment: Alignment.topCenter,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 50, maxHeight: 150),
+                      constraints:
+                          const BoxConstraints(maxWidth: 50, maxHeight: 150),
                       child: userManager.isLoggedin
                           ? ListTile(
-                              contentPadding: EdgeInsets.all(20),
-                              title: Text('< Tap to logout'),
+                              contentPadding: const EdgeInsets.all(20),
+                              title: const Text('< Tap to logout'),
                               leading: IconButton(
                                   onPressed: () {
                                     logout().then((value) => refresh()).then(
                                         (value) => Navigator.of(context).pop());
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.signOutAlt)),
+                                  icon: const FaIcon(
+                                      FontAwesomeIcons.signOutAlt)),
                             )
                           : ListTile(
-                              contentPadding: EdgeInsets.all(20),
-                              title: Text('Supported channels: '),
+                              contentPadding: const EdgeInsets.all(20),
+                              title: const Text('Supported channels: '),
                               trailing: Wrap(children: [
                                 IconButton(
                                     onPressed: () {
@@ -62,7 +66,8 @@ class _userProfileEntryState extends State<userProfileEntry> {
                                           .then((value) =>
                                               Navigator.of(context).pop());
                                     },
-                                    icon: FaIcon(FontAwesomeIcons.google)),
+                                    icon:
+                                        const FaIcon(FontAwesomeIcons.google)),
                               ]),
                             )),
                 );

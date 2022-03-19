@@ -1,7 +1,8 @@
 // {"-My6Zz6NGCwCItAxuZAa":{"date":"2022-03-17 THU","gym":"BM_TaiSeng","name":"qibao","time_1":"11","time_2":"30","time_3":"AM"}}
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:convert';
 
-import 'package:climbjio/components/auth/user_manager.dart';
 import 'package:climbjio/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -164,7 +165,6 @@ Future<List> apiGetArchivedSession() async {
 Future<void> loginAsVisitor() async {
   UserCredential userCredential =
       await FirebaseAuth.instance.signInAnonymously();
-  print(userCredential.user);
 }
 
 Future<void> logout() async {
@@ -186,9 +186,6 @@ Future<void> loginWithGoogle() async {
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
-
-  // print(credential.accessToken); this one is empty
-  // print(credential.idToken);
 
   // Once signed in
   if (googleUser != null && googleAuth != null) {

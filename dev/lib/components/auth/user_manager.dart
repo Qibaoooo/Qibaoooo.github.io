@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this, constant_identifier_names
+// ignore_for_file: unnecessary_this, constant_identifier_names, import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
 
