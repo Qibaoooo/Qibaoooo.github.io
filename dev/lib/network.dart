@@ -168,7 +168,7 @@ Future<void> loginAsVisitor() async {
 }
 
 Future<void> logout() async {
-  userManager = UserManager();
+  userManager.clearSessionData();
   await FirebaseAuth.instance.signOut();
 }
 
@@ -187,8 +187,19 @@ Future<void> loginWithGoogle() async {
     idToken: googleAuth?.idToken,
   );
 
-  // Once signed in, return the UserCredential
-  userManager.userCredential =
+  // print(credential.accessToken); this one is empty
+  // print(credential.idToken);
+
+  // Once signed in
+  if (googleUser != null && googleAuth != null) {
+    userManager.firebaseCredential = await signInToFireBase(credential);
+    await userManager.loadFromData(googleUser, credential);
+  }
+}
+
+Future<UserCredential> signInToFireBase(OAuthCredential credential) async {
+  // TODO: handle failure cases
+  UserCredential fireCredential =
       await FirebaseAuth.instance.signInWithCredential(credential);
-  userManager.loadFromData(userManager.userCredential);
+  return fireCredential;
 }

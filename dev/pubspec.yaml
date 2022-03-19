@@ -11,6 +11,7 @@ dependencies:
   firebase_auth: ^3.3.11
   firebase_core: ^1.13.1
   google_sign_in: '^4.5.1'
+  shared_preferences: ^2.0.13
   badges: ^2.0.2
   cupertino_icons: ^1.0.3
   animated_widgets: ^1.1.0

@@ -17,6 +17,7 @@ class _userProfileEntryState extends State<userProfileEntry> {
   @override
   void initState() {
     super.initState();
+    userManager.loadFromLocalPrefs().then((value) => refresh());
   }
 
   void refresh() {
