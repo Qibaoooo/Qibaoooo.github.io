@@ -2,6 +2,8 @@ import 'dart:html';
 
 import 'package:animations/animations.dart';
 import 'package:badges/badges.dart';
+import 'package:climbjio/globals.dart';
+import 'package:climbjio/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:climbjio/colors.dart';
@@ -154,213 +156,268 @@ class _SessionListState extends State<SessionList> {
       );
     }
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-      child: ListView.builder(
-        itemCount: _sessions.length,
-        itemBuilder: (BuildContext context, int index) {
-          Session s = _sessions[index];
-          return ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 100, maxHeight: 100),
-            child: GestureDetector(
-              onLongPress: () {
-                deleteSesssion(s.id, s.toPrettyString());
-              },
-              child: Card(
-                elevation: 3,
-                color: kClimbjioPink50,
-                shadowColor: kClimbjioBrown400,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Flexible(
-                        flex: 10,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+        child: ValueListenableBuilder(
+          valueListenable: nickNameNotifier,
+          builder: (context, value, widget) {
+            return ListView.builder(
+              itemCount: _sessions.length,
+              itemBuilder: (BuildContext context, int index) {
+                Session s = _sessions[index];
+                return ConstrainedBox(
+                  constraints:
+                      const BoxConstraints(minHeight: 100, maxHeight: 100),
+                  child: GestureDetector(
+                    onLongPress: () {
+                      deleteSesssion(s.id, s.toPrettyString());
+                    },
+                    child: Card(
+                      elevation: 3,
+                      color: kClimbjioPink50,
+                      shadowColor: kClimbjioBrown400,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Spacer(),
-                            Row(
-                              children: [
-                                const FaIcon(
-                                  FontAwesomeIcons.calendarDay,
-                                  size: 15,
-                                  color: kClimbjioBrown900,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(s.date),
-                              ],
+                            const SizedBox(
+                              width: 10,
                             ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                const FaIcon(
-                                  FontAwesomeIcons.clock,
-                                  size: 15,
-                                  color: kClimbjioBrown900,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(s.time1 +
-                                    " : " +
-                                    s.time2 +
-                                    "  -  " +
-                                    s.time3),
-                              ],
-                            ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                const FaIcon(
-                                  FontAwesomeIcons.locationArrow,
-                                  size: 15,
-                                  color: kClimbjioBrown900,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(s.gym),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Flexible(
-                          flex: 14,
-                          child: SizedBox(
-                            width: 300,
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
-                              children: s.nameList().map((name) {
-                                return Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 5),
-                                  child: DecoratedBox(
-                                      decoration: const BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                                blurRadius: 1,
-                                                color: Colors.grey,
-                                                offset: Offset(3, 4))
-                                          ],
-                                          // border: Border.all(
-                                          //     width: 1, color: kClimbjioBrown900),
-                                          color: kClimbjioSurfaceWhite,
-                                          gradient: LinearGradient(colors: [
-                                            kClimbjioSurfaceWhite,
-                                            kClimbjioPink50
-                                          ]),
-                                          shape: BoxShape.rectangle,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(40))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            3, 3, 5, 5),
-                                        child: Text(name),
-                                      )),
-                                );
-                              }).toList(),
-                            ),
-                          )),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: OpenContainer(
-                            closedColor: kClimbjioPink300,
-                            closedBuilder: ((context, action) {
-                              return IconButton(
-                                onPressed: () {
-                                  action();
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  size: 20,
-                                  color: kClimbjioBrown900,
-                                ),
-                              );
-                            }),
-                            openBuilder: (context, action) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(30, 100, 30, 30),
-                                child: Column(children: [
-                                  const ListTile(
-                                    title: Center(child: Text("Join Session")),
+                            Flexible(
+                              flex: 10,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      const FaIcon(
+                                        FontAwesomeIcons.calendarDay,
+                                        size: 15,
+                                        color: kClimbjioBrown900,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(s.date),
+                                    ],
                                   ),
-                                  Text(s.date,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
-                                  Text(
-                                      s.time1 +
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      const FaIcon(
+                                        FontAwesomeIcons.clock,
+                                        size: 15,
+                                        color: kClimbjioBrown900,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(s.time1 +
                                           " : " +
                                           s.time2 +
                                           "  -  " +
-                                          s.time3,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
-                                  Text(s.gym,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
-                                  const SizedBox(height: 40),
-                                  ListTile(
-                                    title: TextField(
-                                      // enabled: false,
-                                      controller: _joinName,
-                                      onTap: () {},
-                                      decoration: InputDecoration(
-                                          labelText: "who's joining?",
-                                          labelStyle: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary)),
-                                    ),
-                                    trailing: IconButton(
-                                        onPressed: () {
-                                          if (_joinName.text.isEmpty) {
-                                            return;
-                                          }
-                                          updateClimbersForSession(s.id,
-                                              s.name + ", " + _joinName.text);
-                                          action();
-                                        },
-                                        icon: const FaIcon(
-                                            FontAwesomeIcons.paperPlane)),
+                                          s.time3),
+                                    ],
                                   ),
-                                  const SizedBox(height: 60),
-                                  IconButton(
-                                    icon: const FaIcon(
-                                        FontAwesomeIcons.windowClose),
-                                    onPressed: () {
-                                      action();
-                                    },
-                                  )
-                                ]),
-                              );
-                            }),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      )
-                    ]),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      const FaIcon(
+                                        FontAwesomeIcons.locationArrow,
+                                        size: 15,
+                                        color: kClimbjioBrown900,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(s.gym),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            ValueListenableBuilder(
+                                valueListenable: isLoggedInNotifier,
+                                builder: (context, isLoggedinValue, widget) {
+                                  return Flexible(
+                                      flex: 14,
+                                      child: SizedBox(
+                                        width: 300,
+                                        child: Wrap(
+                                          alignment: WrapAlignment.center,
+                                          children: <Widget>[
+                                                if (isLoggedinValue as bool &&
+                                                    _nameNotInList(
+                                                        nickNameNotifier.value,
+                                                        s.nameList()))
+                                                  GestureDetector(
+                                                    onTap: (() {}),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(8.0),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          updateClimbersForSession(
+                                                              s.id,
+                                                              s.name +
+                                                                  "," +
+                                                                  nickNameNotifier
+                                                                      .value);
+                                                        },
+                                                        child: FaIcon(
+                                                          FontAwesomeIcons.hand,
+                                                          size: 18,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                else
+                                                  const SizedBox.shrink()
+                                              ] +
+                                              s.nameList().map((name) {
+                                                return Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 8,
+                                                      right: 8,
+                                                      top: 5),
+                                                  child: DecoratedBox(
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              boxShadow: [
+                                                            BoxShadow(
+                                                                blurRadius: 1,
+                                                                color:
+                                                                    Colors.grey,
+                                                                offset: Offset(
+                                                                    3, 4))
+                                                          ],
+                                                              // border: Border.all(
+                                                              //     width: 1, color: kClimbjioBrown900),
+                                                              color:
+                                                                  kClimbjioSurfaceWhite,
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                      colors: [
+                                                                    kClimbjioSurfaceWhite,
+                                                                    kClimbjioPink50
+                                                                  ]),
+                                                              shape: BoxShape
+                                                                  .rectangle,
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          40))),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                3, 3, 5, 5),
+                                                        child: Text(name),
+                                                      )),
+                                                );
+                                              }).toList(),
+                                        ),
+                                      ));
+                                }),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: OpenContainer(
+                                  closedColor: kClimbjioPink300,
+                                  closedBuilder: ((context, action) {
+                                    return IconButton(
+                                      onPressed: () {
+                                        action();
+                                      },
+                                      icon: const Icon(
+                                        Icons.add,
+                                        size: 20,
+                                        color: kClimbjioBrown900,
+                                      ),
+                                    );
+                                  }),
+                                  openBuilder: (context, action) {
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          30, 100, 30, 30),
+                                      child: Column(children: [
+                                        const ListTile(
+                                          title: Center(
+                                              child: Text("Join Session")),
+                                        ),
+                                        Text(s.date,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6),
+                                        Text(
+                                            s.time1 +
+                                                " : " +
+                                                s.time2 +
+                                                "  -  " +
+                                                s.time3,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6),
+                                        Text(s.gym,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6),
+                                        const SizedBox(height: 40),
+                                        ListTile(
+                                          title: TextField(
+                                            // enabled: false,
+                                            controller: _joinName,
+                                            onTap: () {},
+                                            decoration: InputDecoration(
+                                                labelText: "who's joining?",
+                                                labelStyle: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary)),
+                                          ),
+                                          trailing: IconButton(
+                                              onPressed: () {
+                                                if (_joinName.text.isEmpty) {
+                                                  return;
+                                                }
+                                                updateClimbersForSession(
+                                                    s.id,
+                                                    s.name +
+                                                        "," +
+                                                        _joinName.text);
+                                                action();
+                                              },
+                                              icon: const FaIcon(
+                                                  FontAwesomeIcons.paperPlane)),
+                                        ),
+                                        const SizedBox(height: 60),
+                                        IconButton(
+                                          icon: const FaIcon(
+                                              FontAwesomeIcons.windowClose),
+                                          onPressed: () {
+                                            action();
+                                          },
+                                        )
+                                      ]),
+                                    );
+                                  }),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ]),
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ));
   }
 
   @override
@@ -390,5 +447,14 @@ class _SessionListState extends State<SessionList> {
         )
       ]),
     );
+  }
+
+  bool _nameNotInList(String name, List<String> nameList) {
+    for (String n in nameList) {
+      if (n == name) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
+import 'package:climbjio/globals.dart';
 import 'package:intl/intl.dart';
 
 import 'package:animated_widgets/animated_widgets.dart';
@@ -49,6 +50,7 @@ class _SessionFormState extends State<SessionForm> {
       setState(() {
         pastSessions.addAll(value);
       });
+      resetState();
     });
   }
 
@@ -62,6 +64,10 @@ class _SessionFormState extends State<SessionForm> {
       _dateController.text = "";
       _climbersController.text = "";
       FocusScope.of(context).unfocus();
+      if (userManager.isLoggedin) {
+        _climbers += userManager.nickName;
+        _climbersController.text = _climbers;
+      }
     });
   }
 
@@ -137,7 +143,7 @@ class _SessionFormState extends State<SessionForm> {
         validClimbers = false;
         if (_climbers.isNotEmpty) {
           bool valid =
-              RegExp("^[a-zA-Z,，\u4E00-\u9FFF\\s]*\$").hasMatch(_climbers);
+              RegExp("^[a-zA-Z,，\u4E00-\u9FFF]*\$").hasMatch(_climbers);
           // letters comma 逗号 中文 space
           if (valid) {
             validClimbers = true;

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this, constant_identifier_names, import_of_legacy_library_into_null_safe
+// ignore_for_file: unnecessary_this, constant_identifier_names, import_of_legacy_library_into_null_safe, non_constant_identifier_names
 
 import 'dart:developer';
 
@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const UM_displayName = 'UM_displayName';
+const UM_nickName = 'UM_nickName';
 const UM_email = 'UM_email';
 const UM_id = 'UM_id';
 const UM_photoUrl = 'UM_photoUrl';
@@ -30,20 +31,17 @@ class UserManager with ChangeNotifier {
   UserManager() {
     this.nickName = "climber";
     this.isLoggedin = false;
-    // loadFromLocalPrefs().then((idToken) {
-    //   try {
-    //     signInToFireBase(GoogleAuthProvider.credential(
-    //         accessToken: null, idToken: this.idToken + '1'));
-    //   } catch (err) {
-    //     print('gg:');
-    //     print(err);
-    //   }
-    // });
+  }
+
+  Future<void> saveToLocalPrefs(String UM_key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(UM_key, value);
   }
 
   Future<String?> loadFromLocalPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     String? displayName = prefs.getString(UM_displayName);
+    String? nickName = prefs.getString(UM_nickName);
     String? email = prefs.getString(UM_email);
     String? id = prefs.getString(UM_id);
     String? photoUrl = prefs.getString(UM_photoUrl);
@@ -52,19 +50,22 @@ class UserManager with ChangeNotifier {
         email != null &&
         id != null &&
         photoUrl != null &&
-        idToken != null) {
+        idToken != null &&
+        nickName != null) {
       this.displayName = displayName;
       this.email = email;
       this.id = id;
       this.photoUrl = photoUrl;
       this.idToken = idToken;
 
-      this.nickName = displayName; // to be changed
+      this.nickName = nickName; // to be changed
       notifyListeners();
 
       // not just load token, verify can login as well.
       try {
-        await signInToFireBase(GoogleAuthProvider.credential(idToken: idToken));
+        print('signing to firebase using saved session token...');
+        firebaseCredential = await signInToFireBase(
+            GoogleAuthProvider.credential(idToken: idToken));
       } catch (err) {
         log(err.toString());
         log('Seems like your last seesion has ended. Please login again.');
@@ -82,12 +83,6 @@ class UserManager with ChangeNotifier {
   // and save it as local session
   Future<void> loadFromData(
       GoogleSignInAccount user, OAuthCredential oAuthCredential) async {
-    var newNickName = user.displayName;
-    if (newNickName.isNotEmpty) {
-      this.nickName = newNickName;
-      this.isLoggedin = true;
-    }
-
     this.displayName = user.displayName!;
     this.email = user.email!;
     this.id = user.id;
@@ -95,8 +90,15 @@ class UserManager with ChangeNotifier {
     this.oAuthCredential = oAuthCredential;
     this.idToken = oAuthCredential.idToken!;
 
+    var remoteNickName = await apiGetRemoteUserNickName();
+    if (remoteNickName.isNotEmpty) {
+      this.nickName = remoteNickName;
+      this.isLoggedin = true;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(UM_displayName, this.displayName);
+    await prefs.setString(UM_nickName, this.nickName);
     await prefs.setString(UM_email, this.email);
     await prefs.setString(UM_id, this.id);
     await prefs.setString(UM_photoUrl, this.photoUrl);
@@ -117,9 +119,12 @@ class UserManager with ChangeNotifier {
 
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(UM_displayName);
+    prefs.remove(UM_nickName);
     prefs.remove(UM_email);
     prefs.remove(UM_id);
     prefs.remove(UM_photoUrl);
     prefs.remove(UM_idToken);
+
+    isLoggedInNotifier.value = false;
   }
 }

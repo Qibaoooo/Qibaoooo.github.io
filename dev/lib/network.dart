@@ -2,11 +2,16 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:climbjio/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+
+ValueNotifier<bool> isLoggedInNotifier = ValueNotifier(false);
 
 class Session implements Comparable<Session> {
   late String date;
@@ -162,6 +167,80 @@ Future<List> apiGetArchivedSession() async {
   return results;
 }
 
+Future<http.Response> apiSetUserNickName(String newNickName) async {
+  Future<http.Response> resp;
+
+  var useruid = userManager.firebaseCredential?.user!.uid;
+  var firebasetoken = await userManager.firebaseCredential!.user?.getIdToken();
+
+  var _url =
+      "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/userdata/" +
+          useruid.toString() +
+          ".json" +
+          "?auth=" +
+          firebasetoken!;
+  String _patchData = jsonEncode({"nickname": newNickName});
+  resp = http.patch(Uri.parse(_url), body: _patchData, headers: {});
+  return resp;
+}
+
+Future<String> apiGetRemoteUserNickName() async {
+  http.Response resp;
+
+  var useruid = userManager.firebaseCredential?.user!.uid;
+  var firebasetoken = await userManager.firebaseCredential!.user?.getIdToken();
+
+  var _url =
+      "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/userdata/" +
+          useruid.toString() +
+          "/nickname" +
+          ".json" +
+          "?auth=" +
+          firebasetoken!;
+  resp = await http.get(Uri.parse(_url), headers: {});
+  return resp.body.substring(1, resp.body.length - 1);
+}
+
+Future<http.Response> checkIfUserHasDataIfNotCreate() async {
+  http.Response resp;
+  Future<http.Response> creationResp;
+  var useruid = userManager.firebaseCredential?.user!.uid;
+  var _url =
+      "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/userdata/" +
+          useruid.toString() +
+          ".json";
+  resp = await http.get(Uri.parse(_url), headers: {});
+
+  if (resp.statusCode == 200 && resp.body != "null") {
+    return resp;
+  } else {
+    log('creating new user data for logged in user.');
+    return apiCreateUserData();
+  }
+}
+
+Future<http.Response> apiCreateUserData() async {
+  Future<http.Response> resp;
+
+  var useruid = userManager.firebaseCredential?.user!.uid;
+  var firebasetoken = await userManager.firebaseCredential!.user?.getIdToken();
+
+  if (firebasetoken == null) {
+    return http.Response.bytes([0], 401); // not authed
+  }
+  var _url =
+      "https://climbjio-default-rtdb.asia-southeast1.firebasedatabase.app/userdata.json?returnSecureToken=true&auth=" +
+          firebasetoken;
+  String _postData = jsonEncode({
+    useruid.toString(): {
+      "email": userManager.email,
+      // "nickname": userManager.displayName,
+    }
+  });
+  resp = http.put(Uri.parse(_url), body: _postData, headers: {});
+  return resp;
+}
+
 Future<void> loginAsVisitor() async {
   UserCredential userCredential =
       await FirebaseAuth.instance.signInAnonymously();
@@ -172,7 +251,7 @@ Future<void> logout() async {
   await FirebaseAuth.instance.signOut();
 }
 
-Future<void> loginWithGoogle() async {
+Future<bool> loginWithGoogle() async {
   // Trigger the authentication flow
   final GoogleSignInAccount? googleUser =
       await GoogleSignIn(clientId: clintIdGoogleSignin).signIn();
@@ -192,11 +271,16 @@ Future<void> loginWithGoogle() async {
     userManager.firebaseCredential = await signInToFireBase(credential);
     await userManager.loadFromData(googleUser, credential);
   }
+
+  return userManager.firebaseCredential!.additionalUserInfo!.isNewUser;
 }
 
 Future<UserCredential> signInToFireBase(OAuthCredential credential) async {
   // TODO: handle failure cases
   UserCredential fireCredential =
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+  isLoggedInNotifier.value = true;
+
   return fireCredential;
 }
